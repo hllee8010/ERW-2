@@ -1,0 +1,2193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영독작2 분석지 | 에듀케레 영수학원</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1a2744;
+  --navy-light: #243460;
+  --gold: #c8a84b;
+  --gold-light: #e8d08b;
+  --cream: #faf8f3;
+  --white: #ffffff;
+  --gray-light: #f0eeea;
+  --gray: #888;
+  --text: #1a1a2e;
+  --green-bg: #e8f5e9;
+  --green-text: #2e7d32;
+  --yellow-bg: #fffde7;
+  --yellow-text: #7f6000;
+  --blue-mid: #2E75B6;
+  --correct: #2e7d32;
+  --wrong: #c62828;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── COVER ── */
+#cover {
+  min-height: 100vh;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 40px 20px;
+}
+#cover::before {
+  content:'';
+  position:absolute; inset:0;
+  background: radial-gradient(ellipse at 30% 40%, rgba(200,168,75,0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 80%, rgba(42,60,120,0.4) 0%, transparent 50%);
+}
+.cover-deco {
+  position:absolute;
+  border: 1px solid rgba(200,168,75,0.2);
+  border-radius: 50%;
+}
+.cover-deco:nth-child(1){width:600px;height:600px;top:-200px;right:-200px;}
+.cover-deco:nth-child(2){width:400px;height:400px;bottom:-150px;left:-100px;}
+.cover-inner {
+  position:relative; z-index:1; text-align:center;
+}
+.cover-badge {
+  display:inline-block;
+  border:1px solid var(--gold);
+  color:var(--gold);
+  font-size:11px; letter-spacing:3px; text-transform:uppercase;
+  padding:6px 20px; margin-bottom:32px;
+  font-family:'EB Garamond',serif;
+}
+.cover-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(52px,10vw,96px);
+  font-weight:900;
+  color:var(--white);
+  line-height:1;
+  margin-bottom:8px;
+}
+.cover-title span { color:var(--gold); }
+.cover-subtitle {
+  font-family:'EB Garamond',serif;
+  font-size:clamp(16px,3vw,22px);
+  color:rgba(255,255,255,0.65);
+  letter-spacing:2px;
+  margin-bottom:48px;
+}
+.cover-divider {
+  width:80px; height:2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin:0 auto 36px;
+}
+.cover-info {
+  color:rgba(255,255,255,0.5);
+  font-size:13px; line-height:2;
+  letter-spacing:1px;
+}
+.cover-info strong { color:var(--gold-light); }
+.cover-start {
+  margin-top:48px;
+  background: var(--gold);
+  color: var(--navy);
+  border:none; cursor:pointer;
+  font-family:'Noto Sans KR',sans-serif;
+  font-weight:700; font-size:14px;
+  padding:14px 40px;
+  letter-spacing:2px;
+  transition: all .3s;
+}
+.cover-start:hover { background:var(--gold-light); transform:translateY(-2px); }
+
+/* ── MAIN APP ── */
+#app { display:none; }
+.app-header {
+  background: var(--navy);
+  padding: 16px 24px;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:100;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+.app-logo {
+  font-family:'Playfair Display',serif;
+  font-size:20px; font-weight:700;
+  color:var(--white);
+}
+.app-logo span { color:var(--gold); }
+.app-school {
+  font-size:11px; color:rgba(255,255,255,0.5);
+  letter-spacing:1px;
+}
+
+/* Sidebar + Content */
+.app-body {
+  display:flex; min-height: calc(100vh - 57px);
+}
+.sidebar {
+  width:220px; flex-shrink:0;
+  background:var(--navy-light);
+  padding:20px 0;
+  position:sticky; top:57px;
+  height:calc(100vh - 57px);
+  overflow-y:auto;
+}
+.sidebar-section {
+  padding:8px 16px 4px;
+  font-size:10px; letter-spacing:2px;
+  color:rgba(255,255,255,0.35);
+  text-transform:uppercase;
+  font-weight:700;
+}
+.sidebar-item {
+  display:block; width:100%;
+  padding:10px 20px;
+  background:none; border:none; cursor:pointer;
+  text-align:left;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:13px; color:rgba(255,255,255,0.65);
+  border-left:3px solid transparent;
+  transition:all .2s;
+  line-height:1.4;
+}
+.sidebar-item:hover { background:rgba(255,255,255,0.05); color:var(--white); }
+.sidebar-item.active {
+  background:rgba(200,168,75,0.12);
+  color:var(--gold);
+  border-left-color:var(--gold);
+  font-weight:700;
+}
+.sidebar-item .passage-num {
+  display:block; font-size:10px;
+  color:rgba(255,255,255,0.3);
+  font-weight:400;
+}
+.sidebar-item.active .passage-num { color:rgba(200,168,75,0.6); }
+
+/* Main content */
+.main-content {
+  flex:1; padding:32px;
+  max-width: 900px;
+  overflow-x:hidden;
+}
+
+/* Tabs */
+.tabs {
+  display:flex; gap:4px; margin-bottom:28px;
+  border-bottom:2px solid rgba(26,39,68,0.1);
+  overflow-x:auto; padding-bottom:0;
+}
+.tab-btn {
+  background:none; border:none; cursor:pointer;
+  padding:10px 18px;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:13px; font-weight:500;
+  color:var(--gray);
+  border-bottom:2px solid transparent;
+  margin-bottom:-2px;
+  white-space:nowrap;
+  transition:all .2s;
+}
+.tab-btn:hover { color:var(--navy); }
+.tab-btn.active {
+  color:var(--navy);
+  border-bottom-color:var(--gold);
+  font-weight:700;
+}
+
+/* Passage header */
+.passage-header {
+  margin-bottom:24px;
+}
+.passage-tag {
+  display:inline-block;
+  background:var(--gold);
+  color:var(--navy);
+  font-size:11px; font-weight:700;
+  padding:3px 10px; letter-spacing:1px;
+  margin-bottom:10px;
+}
+.passage-title {
+  font-family:'Playfair Display',serif;
+  font-size:22px; font-weight:700;
+  color:var(--navy); line-height:1.3;
+}
+
+/* Tab content */
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+
+/* ── TAB 1: 전문 ── */
+.full-text-box {
+  background:var(--white);
+  border:1px solid #ddd;
+  border-left:4px solid var(--blue-mid);
+  border-radius:4px;
+  padding:24px 28px;
+  font-family:'EB Garamond',serif;
+  font-size:17px; line-height:2;
+  color:#1a1a1a;
+  margin-bottom:20px;
+}
+
+/* ── TAB 2: 문장분석 ── */
+.sentence-block { margin-bottom:28px; }
+.sent-num {
+  display:inline-block;
+  width:26px; height:26px;
+  background:var(--navy);
+  color:var(--white);
+  border-radius:50%;
+  font-size:12px; font-weight:700;
+  text-align:center; line-height:26px;
+  margin-right:8px; flex-shrink:0;
+}
+.sent-english {
+  background:var(--white);
+  border:1px solid #ccc;
+  border-left:4px solid var(--blue-mid);
+  padding:14px 18px;
+  font-family:'EB Garamond',serif;
+  font-size:16px; line-height:1.8;
+  margin-bottom:10px;
+  display:flex; align-items:flex-start; gap:8px;
+}
+.sent-english-text { flex:1; }
+.slash-reading {
+  background:var(--gray-light);
+  border-radius:4px;
+  padding:10px 16px;
+  margin-bottom:10px;
+  font-size:13px; line-height:1.9;
+  color:#444;
+}
+.slash-en { color:var(--navy); font-weight:500; font-family:'EB Garamond',serif; font-size:15px; }
+.slash-ko { color:#555; font-size:12px; margin-top:2px; }
+.grammar-item {
+  background:var(--yellow-bg);
+  border-left:3px solid var(--gold);
+  padding:8px 14px;
+  margin-bottom:6px;
+  font-size:12.5px; line-height:1.7;
+  border-radius:0 4px 4px 0;
+}
+.grammar-item .g-title { color:var(--yellow-text); font-weight:700; }
+.grammar-item .g-example { color:#555; }
+.grammar-item .g-point { color:#c62828; font-weight:500; }
+
+/* ── TAB 3: 핵심단어 ── */
+.vocab-item {
+  background:var(--white);
+  border:1px solid #e0e0e0;
+  border-left:4px solid var(--green-text);
+  padding:12px 18px;
+  margin-bottom:8px;
+  border-radius:0 6px 6px 0;
+  display:flex; gap:16px; align-items:baseline; flex-wrap:wrap;
+}
+.vocab-word {
+  font-family:'EB Garamond',serif;
+  font-size:17px; font-weight:600;
+  color:var(--navy); min-width:150px;
+}
+.vocab-meaning { font-size:13px; color:#333; flex:1; }
+.vocab-pos {
+  font-size:11px; color:var(--green-text);
+  background:var(--green-bg);
+  padding:2px 8px; border-radius:20px;
+  font-weight:700; white-space:nowrap;
+}
+.vocab-deriv { font-size:12px; color:#777; font-style:italic; }
+
+/* ── TAB 4: 전문해석 ── */
+.translation-box {
+  background:var(--white);
+  border:1px solid #e0e0e0;
+  border-radius:6px;
+  padding:28px 32px;
+  font-size:15px; line-height:2.2;
+  color:#2a2a2a;
+}
+.translation-box p { margin-bottom:16px; }
+
+/* ── TAB 5: 주제와 요지 ── */
+.topic-card {
+  background:var(--white);
+  border:1px solid #e0e0e0;
+  border-radius:8px;
+  padding:20px 24px;
+  margin-bottom:16px;
+}
+.topic-label {
+  font-size:11px; font-weight:700;
+  color:var(--gold); letter-spacing:2px;
+  text-transform:uppercase; margin-bottom:8px;
+}
+.topic-content { font-size:14px; line-height:1.8; color:#2a2a2a; }
+.structure-step {
+  display:flex; gap:16px; align-items:flex-start;
+  margin-bottom:12px;
+}
+.step-badge {
+  background:var(--navy);
+  color:var(--white);
+  font-size:11px; font-weight:700;
+  padding:4px 10px; border-radius:20px;
+  white-space:nowrap; flex-shrink:0;
+  margin-top:2px;
+}
+.step-text { font-size:13px; line-height:1.7; color:#333; }
+
+/* ── TAB 6: 변형문제 ── */
+.quiz-block { margin-bottom:36px; }
+.quiz-num {
+  display:inline-block;
+  background:var(--navy);
+  color:var(--white);
+  font-size:12px; font-weight:700;
+  padding:4px 12px; margin-bottom:12px;
+  border-radius:2px;
+}
+.quiz-question {
+  font-size:14px; line-height:1.8;
+  margin-bottom:14px; color:#1a1a1a;
+  background:var(--white);
+  border:1px solid #e0e0e0;
+  padding:14px 18px; border-radius:4px;
+}
+.quiz-question em { font-style:normal; font-weight:700; text-decoration:underline; }
+.quiz-options { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
+.quiz-option {
+  display:flex; align-items:center; gap:10px;
+  background:var(--white);
+  border:1.5px solid #ddd;
+  padding:10px 16px;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:13px; line-height:1.6;
+  transition:all .2s;
+  text-align:left;
+}
+.quiz-option:hover { border-color:var(--navy); background:var(--gray-light); }
+.quiz-option.correct { border-color:var(--correct); background:#e8f5e9; color:var(--correct); font-weight:700; }
+.quiz-option.wrong { border-color:var(--wrong); background:#ffebee; color:var(--wrong); }
+.quiz-option .opt-icon { font-size:16px; }
+.quiz-explanation {
+  display:none;
+  background:var(--navy);
+  color:var(--white);
+  font-size:12.5px; padding:10px 16px;
+  border-radius:4px; margin-top:6px;
+  line-height:1.7;
+}
+.quiz-explanation.show { display:block; }
+.reset-btn {
+  background:none; border:1px solid #ccc;
+  padding:6px 14px; font-size:12px;
+  cursor:pointer; border-radius:4px;
+  color:#888; margin-top:8px;
+  font-family:'Noto Sans KR',sans-serif;
+  transition:all .2s;
+}
+.reset-btn:hover { border-color:var(--navy); color:var(--navy); }
+
+/* 서술형 */
+.essay-block { margin-bottom:28px; }
+.essay-label {
+  background:var(--navy);
+  color:var(--white);
+  font-size:12px; font-weight:700;
+  padding:6px 14px; display:inline-block;
+  margin-bottom:12px; border-radius:2px;
+}
+.essay-question {
+  font-size:14px; line-height:1.9;
+  background:var(--white);
+  border:1px solid #e0e0e0;
+  padding:14px 18px; border-radius:4px;
+  margin-bottom:10px; color:#1a1a1a;
+}
+.essay-condition {
+  font-size:12px; color:var(--blue-mid);
+  background:rgba(46,117,182,0.08);
+  padding:6px 12px; border-radius:4px;
+  margin-bottom:12px; font-weight:500;
+}
+.essay-textarea {
+  width:100%; min-height:80px;
+  border:1px solid #ccc; border-radius:4px;
+  padding:10px 14px;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:13px; resize:vertical;
+  background:var(--white); color:#1a1a1a;
+  margin-bottom:8px;
+}
+.essay-textarea:focus { outline:none; border-color:var(--navy); }
+.answer-toggle {
+  background:none; border:1px solid var(--gold);
+  color:var(--gold); padding:7px 16px;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:12px; cursor:pointer;
+  border-radius:4px; font-weight:700;
+  transition:all .2s;
+}
+.answer-toggle:hover { background:var(--gold); color:var(--navy); }
+.essay-answer {
+  display:none;
+  background:var(--navy);
+  color:var(--white);
+  padding:12px 18px;
+  border-radius:4px; margin-top:10px;
+  font-size:13px; line-height:1.8;
+}
+.essay-answer.show { display:block; }
+
+/* Section titles */
+.section-title {
+  font-family:'Playfair Display',serif;
+  font-size:18px; font-weight:700;
+  color:var(--navy); margin-bottom:20px;
+  padding-bottom:10px;
+  border-bottom:2px solid var(--gold);
+  display:flex; align-items:center; gap:10px;
+}
+.section-title .num {
+  background:var(--navy);
+  color:var(--white); font-size:12px;
+  width:26px; height:26px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:50%; font-family:'Noto Sans KR',sans-serif;
+  font-weight:700; flex-shrink:0;
+}
+
+/* Divider */
+.passage-divider {
+  margin:40px 0;
+  border:none;
+  border-top:2px dashed rgba(26,39,68,0.15);
+}
+
+/* Footer */
+.main-footer {
+  text-align:center; padding:20px;
+  font-size:12px; color:#aaa;
+  border-top:1px solid #e0e0e0;
+  margin-top:40px;
+}
+
+/* Mobile */
+@media(max-width:700px){
+  .sidebar{display:none;}
+  .main-content{padding:16px;}
+  .tab-btn{padding:8px 10px; font-size:12px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ COVER ══════════════════ -->
+<div id="cover">
+  <div class="cover-deco"></div>
+  <div class="cover-deco"></div>
+  <div class="cover-inner">
+    <div class="cover-badge">에듀케레 영수학원 · Educare Academy</div>
+    <div class="cover-title">영독작<span>2</span></div>
+    <div class="cover-subtitle">영어 독해 & 작문 심화 분석지</div>
+    <div class="cover-divider"></div>
+    <div class="cover-info">
+      <strong>본문 1</strong> Following the Wall: An Inspiring Walk around Seoul<br>
+      <strong>본문 2</strong> The Incredible Adventures of James Holman<br><br>
+      총 7블럭 · 전문 / 문장분석 / 핵심단어 / 전문해석 / 주제와요지 / 변형문제
+    </div>
+    <button class="cover-start" onclick="startApp()">분석지 시작 →</button>
+  </div>
+</div>
+
+<!-- ══════════════════ APP ══════════════════ -->
+<div id="app">
+<header class="app-header">
+  <div>
+    <div class="app-logo">영독작<span>2</span></div>
+    <div class="app-school">에듀케레 영수학원 분석지</div>
+  </div>
+</header>
+
+<div class="app-body">
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-section">본문 1 · Seoul Wall</div>
+  <button class="sidebar-item active" onclick="showPassage(0)">
+    <span class="passage-num">1-1</span>Introduction
+  </button>
+  <button class="sidebar-item" onclick="showPassage(1)">
+    <span class="passage-num">1-2</span>Day 1
+  </button>
+  <button class="sidebar-item" onclick="showPassage(2)">
+    <span class="passage-num">1-3</span>Day 2
+  </button>
+  <button class="sidebar-item" onclick="showPassage(3)">
+    <span class="passage-num">1-4</span>Day 3
+  </button>
+  <div class="sidebar-section" style="margin-top:12px">본문 2 · Holman</div>
+  <button class="sidebar-item" onclick="showPassage(4)">
+    <span class="passage-num">2-1</span>Introduction
+  </button>
+  <button class="sidebar-item" onclick="showPassage(5)">
+    <span class="passage-num">2-2</span>The Journey
+  </button>
+  <button class="sidebar-item" onclick="showPassage(6)">
+    <span class="passage-num">2-3</span>Legacy
+  </button>
+</nav>
+
+<!-- MAIN -->
+<main class="main-content" id="mainContent">
+<!-- 각 지문은 JS로 렌더링 -->
+</main>
+</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// 데이터
+// ═══════════════════════════════════════════
+const passages = [
+
+// ──────────────────────────────────────────
+// 0: 1-1 Introduction
+// ──────────────────────────────────────────
+{
+  tag: "본문 1-1",
+  title: "Following the Wall: An Inspiring Walk around Seoul",
+  fullText: `I've just returned from an awesome trip to Seoul. It is a vast metropolis that has been Korea's capital for over 600 years. I spent three days walking along the Seoul City Wall, which surrounds the center of Seoul. It was a fantastic way to see this beautiful city from many different angles and to learn about its history along the way.
+
+In 1396, a wall with four main gates and four smaller gates was constructed to keep the city safe from invaders. Although two of the gates are now gone, many sections of this wall still remain. The wall, which stretches approximately 18.6 kilometers, is the longest-standing traditional city wall in the world.`,
+
+  sentences: [
+    {
+      num:"①",
+      en:"I've just returned from an awesome trip to Seoul.",
+      slash:"I've just returned / from an awesome trip / to Seoul.",
+      slashKo:"나는 방금 돌아왔다 / 멋진 여행에서 / 서울로의.",
+      grammar:[
+        {title:"현재완료 (have + p.p.)", example:"I've just returned → have returned", point:"★ 부사 just와 함께 쓰여 '방금 ~했다' 의미. 수능 시제 문제 단골."},
+        {title:"형용사 awesome", example:"an awesome trip", point:"★ 명사를 수식하는 형용사의 위치 확인."}
+      ]
+    },
+    {
+      num:"②",
+      en:"It is a vast metropolis that has been Korea's capital for over 600 years.",
+      slash:"It is a vast metropolis / that has been Korea's capital / for over 600 years.",
+      slashKo:"그것은 거대한 대도시이다 / 한국의 수도였던 / 600년 이상 동안.",
+      grammar:[
+        {title:"주격 관계대명사 that", example:"a vast metropolis that has been...", point:"★ 선행사(metropolis)를 수식하는 관계절. that vs. which 구별 출제."},
+        {title:"현재완료 + for + 기간", example:"has been ... for over 600 years", point:"★ '~동안 계속 ~해왔다' 계속용법. since와의 차이 주의."}
+      ]
+    },
+    {
+      num:"③",
+      en:"I spent three days walking along the Seoul City Wall, which surrounds the center of Seoul.",
+      slash:"I spent three days / walking along the Seoul City Wall, / which surrounds the center of Seoul.",
+      slashKo:"나는 3일을 보냈다 / 서울 도성을 따라 걸으며, / 서울의 중심을 둘러싸고 있는.",
+      grammar:[
+        {title:"spend + 시간 + -ing", example:"spent three days walking", point:"★ 'spend + 시간/돈 + -ing' 구문. 수능 어법 단골 표현."},
+        {title:"계속적 용법 관계대명사 which", example:", which surrounds the center", point:"★ 콤마+which = 앞 명사 전체를 부연 설명. that 대체 불가."}
+      ]
+    },
+    {
+      num:"④",
+      en:"It was a fantastic way to see this beautiful city from many different angles and to learn about its history along the way.",
+      slash:"It was a fantastic way / to see this beautiful city / from many different angles / and to learn about its history / along the way.",
+      slashKo:"그것은 훌륭한 방법이었다 / 이 아름다운 도시를 보는 / 여러 다양한 각도에서 / 그리고 그 역사를 배우는 / 가는 길에.",
+      grammar:[
+        {title:"to부정사의 형용사적 용법", example:"a fantastic way to see... and to learn...", point:"★ way to-V: '~하는 방법'. to see와 to learn이 병렬 연결."},
+        {title:"병렬 구조 (and)", example:"to see ... and to learn", point:"★ 등위접속사 and로 연결된 to부정사의 병렬. 형태 일치 확인."}
+      ]
+    },
+    {
+      num:"⑤",
+      en:"In 1396, a wall with four main gates and four smaller gates was constructed to keep the city safe from invaders.",
+      slash:"In 1396, / a wall with four main gates and four smaller gates / was constructed / to keep the city safe from invaders.",
+      slashKo:"1396년에, / 4개의 주요 성문과 4개의 작은 성문을 가진 성벽이 / 건설되었다 / 도시를 침략자들로부터 안전하게 지키기 위해.",
+      grammar:[
+        {title:"수동태 (be + p.p.)", example:"was constructed", point:"★ 행위자 없는 수동태. 수능 어법에서 능동/수동 구별 출제."},
+        {title:"to부정사의 부사적 용법 (목적)", example:"to keep the city safe from invaders", point:"★ '~하기 위해' 목적의 부사적 용법. keep+목적어+형용사 5형식."}
+      ]
+    },
+    {
+      num:"⑥",
+      en:"Although two of the gates are now gone, many sections of this wall still remain.",
+      slash:"Although two of the gates are now gone, / many sections of this wall still remain.",
+      slashKo:"비록 성문 중 두 개는 이제 없어졌지만, / 이 성벽의 많은 구간은 여전히 남아있다.",
+      grammar:[
+        {title:"양보 부사절 although", example:"Although two of the gates are now gone", point:"★ although/though/even though 양보절 vs. despite/in spite of(전치사구) 구별."},
+        {title:"자동사 remain", example:"many sections ... still remain", point:"★ remain은 자동사로 수동태 불가. '여전히 ~인 상태이다'."}
+      ]
+    },
+    {
+      num:"⑦",
+      en:"The wall, which stretches approximately 18.6 kilometers, is the longest-standing traditional city wall in the world.",
+      slash:"The wall, / which stretches approximately 18.6 kilometers, / is the longest-standing traditional city wall / in the world.",
+      slashKo:"그 성벽은, / 약 18.6킬로미터에 걸쳐 있는, / 가장 오랫동안 서 있는 전통 도시 성벽이다 / 세계에서.",
+      grammar:[
+        {title:"최상급 표현", example:"the longest-standing ... in the world", point:"★ 최상급+범위(in the world). longest-standing은 복합형용사."},
+        {title:"삽입된 관계절 (계속적 용법)", example:", which stretches approximately 18.6 km,", point:"★ 주어와 동사 사이에 삽입된 관계절. 수식관계 파악 중요."}
+      ]
+    }
+  ],
+
+  vocab: [
+    {word:"metropolis", meaning:"대도시", pos:"n.", deriv:"metropolitan (adj.)"},
+    {word:"surround", meaning:"둘러싸다", pos:"v.", deriv:"surrounding (adj./n.)"},
+    {word:"construct", meaning:"건설하다, 짓다", pos:"v.", deriv:"construction (n.), constructive (adj.)"},
+    {word:"invader", meaning:"침략자", pos:"n.", deriv:"invade (v.), invasion (n.)"},
+    {word:"approximately", meaning:"약, 대략", pos:"adv.", deriv:"approximate (adj./v.)"},
+    {word:"stretch", meaning:"뻗다, 이어지다", pos:"v.", deriv:"—"},
+    {word:"remain", meaning:"남아있다", pos:"v.", deriv:"remainder (n.), remaining (adj.)"},
+    {word:"angle", meaning:"각도, 관점", pos:"n.", deriv:"angular (adj.)"},
+    {word:"capital", meaning:"수도; 자본", pos:"n.", deriv:"capitalism (n.)"},
+    {word:"fantastic", meaning:"훌륭한, 환상적인", pos:"adj.", deriv:"fantasy (n.)"}
+  ],
+
+  translation: `나는 서울로의 멋진 여행에서 방금 돌아왔다. 서울은 600년 이상 한국의 수도로 자리해 온 거대한 대도시이다. 나는 서울의 중심을 둘러싸고 있는 서울 도성을 따라 걷는 데 사흘을 보냈다. 그것은 여러 다양한 각도에서 이 아름다운 도시를 감상하고, 가는 길에 역사를 배울 수 있는 훌륭한 방법이었다.
+
+1396년에, 4개의 주요 성문과 4개의 작은 성문을 갖춘 성벽이 침략자들로부터 도시를 안전하게 지키기 위해 건설되었다. 비록 성문 중 두 개는 이제 사라졌지만, 이 성벽의 많은 구간은 여전히 남아있다. 약 18.6킬로미터에 걸쳐 있는 이 성벽은 세계에서 가장 오랫동안 보존된 전통 도시 성벽이다.`,
+
+  topic: {
+    subject:"서울 도성 도보 여행의 개요와 역사적 배경",
+    mainIdea:"필자는 서울 도성을 따라 걷는 여행을 통해 도시를 다양한 각도로 감상하고 역사를 배웠다. 600년 역사를 지닌 서울 도성은 세계에서 가장 오랫동안 보존된 전통 도시 성벽이다.",
+    structure:[
+      {step:"도입", text:"서울 여행 후 돌아온 필자가 서울 도성 도보 여행을 소개"},
+      {step:"전개", text:"1396년 성벽 건설 역사와 현재 보존 상태 설명"},
+      {step:"결론", text:"세계에서 가장 오래된 전통 도시 성벽임을 강조"}
+    ]
+  },
+
+  quiz: [
+    {
+      type:"mc",
+      qnum:"1",
+      qtype:"주제 추론",
+      question:"다음 글의 주제로 가장 적절한 것은?",
+      options:["서울 도성의 건설 배경과 역사적 의의","세계에서 가장 긴 전통 도시 성벽의 종류","서울 도성 도보 여행의 매력과 역사적 가치","한국 성곽 건축 기술의 우수성","서울의 지리적 특성과 수도로서의 위상"],
+      answer:2,
+      explanation:"필자가 서울 도성을 걸으며 도시를 다양한 각도로 보고 역사를 배웠다는 내용이 중심. ③이 정답."
+    },
+    {
+      type:"mc",
+      qnum:"2",
+      qtype:"빈칸 추론",
+      question:"밑줄 친 부분에 들어갈 말로 가장 적절한 것은?\n\nThe wall, which stretches approximately 18.6 kilometers, is the ________ traditional city wall in the world.",
+      options:["most ancient","longest-standing","best preserved","most famous","highest built"],
+      answer:1,
+      explanation:"본문에서 'longest-standing'이 직접 사용됨. '가장 오랫동안 서 있는' 이 문맥에 적합."
+    },
+    {
+      type:"mc",
+      qnum:"3",
+      qtype:"어법 오류",
+      question:"밑줄 친 ①~⑤ 중 어법상 틀린 것은?\n\nI ①spent three days ②walking along the Seoul City Wall, ③which surrounds the center of Seoul. In 1396, a wall ④was constructing to keep the city safe ⑤from invaders.",
+      options:["①","②","③","④","⑤"],
+      answer:3,
+      explanation:"④ was constructing → was constructed. '건설되다'는 수동의 의미이므로 과거수동 was constructed가 맞음."
+    },
+    {
+      type:"mc",
+      qnum:"4",
+      qtype:"내용 불일치",
+      question:"본문의 내용과 일치하지 않는 것은?",
+      options:["필자는 서울에서 3일을 보냈다.","서울은 600년 이상 한국의 수도였다.","원래 성문은 모두 8개였다.","서울 도성의 성문은 현재 모두 남아있다.","서울 도성은 약 18.6km에 달한다."],
+      answer:3,
+      explanation:"본문에서 '두 개의 성문이 이제 없어졌다(two of the gates are now gone)'고 명시됨. ④가 불일치."
+    },
+    {
+      type:"mc",
+      qnum:"5",
+      qtype:"글의 순서",
+      question:"주어진 문장 다음에 이어질 글의 순서로 가장 적절한 것은?\n\n「I've just returned from an awesome trip to Seoul.」\n\n(A) In 1396, a wall with four main gates and four smaller gates was constructed to keep the city safe from invaders.\n(B) It was a fantastic way to see this beautiful city from many different angles and to learn about its history along the way.\n(C) Although two of the gates are now gone, many sections of this wall still remain.",
+      options:["(A)-(B)-(C)","(B)-(A)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(A)-(C)-(B)"],
+      answer:1,
+      explanation:"주어진 문장 후 도보 여행 소개(B) → 성벽 건설 역사(A) → 현재 보존 상태(C) 순서가 자연스러움."
+    }
+  ],
+
+  essay: [
+    {
+      label:"서술형 1",
+      question:"다음 빈칸 (A), (B)에 들어갈 말을 본문에서 찾아 쓰시오.\n\nThe Seoul City Wall, which (A)________ the center of Seoul, is the (B)________-standing traditional city wall in the world.",
+      condition:"조건: 본문에서 그대로 찾아 쓸 것 / 각각 1단어",
+      answer:"(A) surrounds  (B) longest"
+    },
+    {
+      label:"서술형 2",
+      question:"서울 도성이 건설된 목적을 본문을 바탕으로 우리말로 서술하시오.",
+      condition:"조건: 완전한 문장으로 30자 내외",
+      answer:"침략자들로부터 도시를 안전하게 지키기 위해 건설되었다."
+    }
+  ]
+},
+
+// ──────────────────────────────────────────
+// 1: 1-2 Day 1
+// ──────────────────────────────────────────
+{
+  tag:"본문 1-2",
+  title:"Following the Wall – Day 1",
+  fullText:`Full of excitement and anticipation, I began my journey at Heunginjimun Gate, the gate on the east side of the wall. Not far from there was the Seoul City Wall Museum. I stopped by this museum to learn all about the history of the wall before I started my walk.
+Then I passed through Ihwa Maeul, a village that was home to refugees following the Korean War. Now, the village is decorated with colorful wall paintings and sculptures. I was pleasantly surprised by the creativity of the artists. They have turned the village into a delightful place where visitors can enjoy art everywhere they look.
+After looking around in this charming little village, I crossed over Naksan Mountain, which is the lowest of Seoul's four inner mountains. Naksan Mountain is also known as "Naktasan Mountain," or "Camel Mountain," because of its resemblance to a camel's back.
+At last, I finished my walk at Hyehwamun Gate, one of the wall's four smaller gates. Thanks to Naksan Mountain's gentle slope, the day's walk ended up being pleasurable and relatively easy.`,
+
+  sentences:[
+    {
+      num:"①",
+      en:"Full of excitement and anticipation, I began my journey at Heunginjimun Gate, the gate on the east side of the wall.",
+      slash:"Full of excitement and anticipation, / I began my journey / at Heunginjimun Gate, / the gate on the east side of the wall.",
+      slashKo:"설렘과 기대로 가득 차서, / 나는 여정을 시작했다 / 흥인지문에서, / 성벽 동쪽에 있는 성문인.",
+      grammar:[
+        {title:"분사구문 (형용사구 대용)", example:"Full of excitement and anticipation, I began...", point:"★ 주절 주어(I)의 상태를 나타내는 분사구문. Being full of...의 Being 생략."},
+        {title:"동격 명사구", example:"Heunginjimun Gate, the gate on the east side", point:"★ 콤마 뒤 명사구가 앞 명사를 동격으로 설명. 수능 독해 필수 구조."}
+      ]
+    },
+    {
+      num:"②",
+      en:"Not far from there was the Seoul City Wall Museum.",
+      slash:"Not far from there / was the Seoul City Wall Museum.",
+      slashKo:"거기서 멀지 않은 곳에 / 서울 도성 박물관이 있었다.",
+      grammar:[
+        {title:"장소 부사구 도치", example:"Not far from there was the museum.", point:"★ 부사구가 문두에 오면 주어·동사 도치. 원래 어순: The museum was not far from there."}
+      ]
+    },
+    {
+      num:"③",
+      en:"I stopped by this museum to learn all about the history of the wall before I started my walk.",
+      slash:"I stopped by this museum / to learn all about the history of the wall / before I started my walk.",
+      slashKo:"나는 이 박물관에 들렀다 / 성벽의 역사 전반을 배우기 위해 / 걷기를 시작하기 전에.",
+      grammar:[
+        {title:"stop by (구동사)", example:"stopped by this museum", point:"★ stop by: '~에 들르다'. stop to-V(~하기 위해 멈추다) vs. stop -ing(~를 그만하다) 구별 출제."},
+        {title:"to부정사 부사적 용법 (목적)", example:"to learn all about the history", point:"★ '~하기 위해'의 목적. in order to와 동의."}
+      ]
+    },
+    {
+      num:"④",
+      en:"Then I passed through Ihwa Maeul, a village that was home to refugees following the Korean War.",
+      slash:"Then I passed through Ihwa Maeul, / a village that was home to refugees / following the Korean War.",
+      slashKo:"그런 다음 나는 이화마을을 지나쳤다, / 한국전쟁 이후 피난민들의 보금자리였던 마을인.",
+      grammar:[
+        {title:"동격 + 주격 관계대명사", example:"a village that was home to refugees", point:"★ 선행사 a village를 수식하는 관계절. home to: '~의 보금자리'."},
+        {title:"분사 following (전치사적 용법)", example:"following the Korean War", point:"★ following = after. 분사에서 유래한 전치사로 독해 주의."}
+      ]
+    },
+    {
+      num:"⑤",
+      en:"Now, the village is decorated with colorful wall paintings and sculptures.",
+      slash:"Now, the village / is decorated / with colorful wall paintings and sculptures.",
+      slashKo:"지금은, 그 마을이 / 꾸며져 있다 / 알록달록한 벽화와 조각품들로.",
+      grammar:[
+        {title:"수동태 be decorated with", example:"is decorated with colorful paintings", point:"★ decorate A with B → A be decorated with B. 수동태 전환 출제."}
+      ]
+    },
+    {
+      num:"⑥",
+      en:"I was pleasantly surprised by the creativity of the artists.",
+      slash:"I was pleasantly surprised / by the creativity of the artists.",
+      slashKo:"나는 기분 좋게 놀랐다 / 예술가들의 창의성에.",
+      grammar:[
+        {title:"수동태 + 부사 수식", example:"was pleasantly surprised by", point:"★ 수동태를 수식하는 부사의 위치: be동사와 p.p. 사이. by = 행위자."}
+      ]
+    },
+    {
+      num:"⑦",
+      en:"They have turned the village into a delightful place where visitors can enjoy art everywhere they look.",
+      slash:"They have turned the village / into a delightful place / where visitors can enjoy art / everywhere they look.",
+      slashKo:"그들은 마을을 바꾸어 놓았다 / 즐거운 공간으로 / 방문객들이 예술을 즐길 수 있는 / 어디를 봐도.",
+      grammar:[
+        {title:"turn A into B (5형식 구동사)", example:"have turned the village into a place", point:"★ 'A를 B로 변모시키다'. 현재완료로 쓰여 결과 강조."},
+        {title:"관계부사 where", example:"a delightful place where visitors can enjoy", point:"★ 선행사 place를 수식. where = in which."}
+      ]
+    },
+    {
+      num:"⑧",
+      en:"After looking around in this charming little village, I crossed over Naksan Mountain, which is the lowest of Seoul's four inner mountains.",
+      slash:"After looking around / in this charming little village, / I crossed over Naksan Mountain, / which is the lowest of Seoul's four inner mountains.",
+      slashKo:"이 매력적인 작은 마을을 둘러본 후, / 나는 낙산을 넘었다, / 서울의 네 내사산 중 가장 낮은 산인.",
+      grammar:[
+        {title:"전치사 + 동명사", example:"After looking around", point:"★ 전치사 after 뒤에 동명사. After I looked around의 축약형."},
+        {title:"계속적 용법 which + 최상급", example:", which is the lowest of Seoul's four inner mountains", point:"★ 앞 명사 부연 설명. the lowest of + 복수명사: 최상급 범위 표현."}
+      ]
+    },
+    {
+      num:"⑨",
+      en:"Naksan Mountain is also known as \"Naktasan Mountain,\" or \"Camel Mountain,\" because of its resemblance to a camel's back.",
+      slash:"Naksan Mountain is also known as / \"Naktasan Mountain\" or \"Camel Mountain,\" / because of its resemblance to a camel's back.",
+      slashKo:"낙산은 '낙타산' 또는 '낙타봉'으로도 알려져 있다, / 낙타의 등과 닮았기 때문에.",
+      grammar:[
+        {title:"be known as (수동 관용표현)", example:"is known as 'Camel Mountain'", point:"★ be known as: '~로 알려지다'. be known for(~로 유명하다)와 구별."},
+        {title:"because of + 명사구 (원인)", example:"because of its resemblance to a camel's back", point:"★ because of + (대)명사/명사구. because + 절과 구별. resemblance to: '~와의 유사함'."}
+      ]
+    },
+    {
+      num:"⑩",
+      en:"At last, I finished my walk at Hyehwamun Gate, one of the wall's four smaller gates.",
+      slash:"At last, / I finished my walk / at Hyehwamun Gate, / one of the wall's four smaller gates.",
+      slashKo:"드디어, / 나는 걷기를 마쳤다 / 혜화문에서, / 성벽의 4개 소문 중 하나인.",
+      grammar:[
+        {title:"finish + 동명사", example:"finished my walk", point:"★ finish는 동명사 목적어만 취함. finish to-V는 오류."},
+        {title:"동격 표현 (one of)", example:"Hyehwamun Gate, one of the four smaller gates", point:"★ one of + 복수명사. 동격으로 앞 명사 부연."}
+      ]
+    },
+    {
+      num:"⑪",
+      en:"Thanks to Naksan Mountain's gentle slope, the day's walk ended up being pleasurable and relatively easy.",
+      slash:"Thanks to Naksan Mountain's gentle slope, / the day's walk ended up being / pleasurable and relatively easy.",
+      slashKo:"낙산의 완만한 경사 덕분에, / 그날의 도보 여행은 결국 / 즐겁고 비교적 쉬운 것이 되었다.",
+      grammar:[
+        {title:"thanks to (원인·이유 전치사구)", example:"Thanks to Naksan Mountain's gentle slope", point:"★ thanks to = because of (긍정적 원인). owing to, due to와 동의."},
+        {title:"end up + -ing", example:"ended up being pleasurable", point:"★ 'end up -ing': '결국 ~하게 되다'. 수능 어법 빈출 표현."}
+      ]
+    }
+  ],
+
+  vocab:[
+    {word:"anticipation", meaning:"기대, 예상", pos:"n.", deriv:"anticipate (v.), anticipated (adj.)"},
+    {word:"refugee", meaning:"피난민, 난민", pos:"n.", deriv:"refuge (n.)"},
+    {word:"sculpture", meaning:"조각품", pos:"n.", deriv:"sculptor (n.), sculpt (v.)"},
+    {word:"creativity", meaning:"창의성", pos:"n.", deriv:"creative (adj.), create (v.)"},
+    {word:"delightful", meaning:"즐거운, 기분 좋은", pos:"adj.", deriv:"delight (n./v.), delighted (adj.)"},
+    {word:"charming", meaning:"매력적인", pos:"adj.", deriv:"charm (n./v.)"},
+    {word:"resemblance", meaning:"유사함, 닮음", pos:"n.", deriv:"resemble (v.)"},
+    {word:"slope", meaning:"경사, 비탈", pos:"n.", deriv:"—"},
+    {word:"pleasurable", meaning:"즐거운", pos:"adj.", deriv:"pleasure (n.), please (v.)"},
+    {word:"pass through", meaning:"~을 통과하다, 지나치다", pos:"phrasal v.", deriv:"—"}
+  ],
+
+  translation:`설렘과 기대로 가득 차서, 나는 성벽 동쪽에 위치한 흥인지문에서 여정을 시작했다. 그리 멀지 않은 곳에 서울 도성 박물관이 있었다. 나는 걷기를 시작하기 전에 성벽의 역사 전반을 배우기 위해 이 박물관에 들렀다.
+
+그런 다음 한국전쟁 이후 피난민들의 보금자리였던 이화마을을 지나쳤다. 지금은 마을이 알록달록한 벽화와 조각품들로 꾸며져 있다. 나는 예술가들의 창의성에 기분 좋게 놀랐다. 그들은 마을을 방문객들이 어디를 봐도 예술을 즐길 수 있는 즐거운 공간으로 탈바꿈시켰다.
+
+이 매력적인 작은 마을을 둘러본 후, 나는 서울의 네 내사산 중 가장 낮은 낙산을 넘었다. 낙산은 낙타의 등과 닮았기 때문에 '낙타산' 또는 '낙타봉'으로도 알려져 있다.
+
+드디어, 나는 성벽의 4개 소문 중 하나인 혜화문에서 도보를 마쳤다. 낙산의 완만한 경사 덕분에 그날의 도보 여행은 결국 즐겁고 비교적 쉬운 것이 되었다.`,
+
+  topic:{
+    subject:"서울 도성 도보 여행 첫날의 경험과 방문지",
+    mainIdea:"필자는 흥인지문에서 출발하여 이화마을, 낙산을 지나 혜화문까지 걸으며 서울의 역사와 예술을 만끽했다. 낙산의 완만한 경사 덕분에 첫날 도보는 즐겁고 수월했다.",
+    structure:[
+      {step:"도입", text:"흥인지문 출발, 서울 도성 박물관 방문"},
+      {step:"전개1", text:"이화마을의 벽화와 조각품 감상"},
+      {step:"전개2", text:"낙산 횡단 및 낙산의 별칭 소개"},
+      {step:"결론", text:"혜화문 도착, 완만한 경사로 수월했던 첫날"}
+    ]
+  },
+
+  quiz:[
+    {
+      type:"mc", qnum:"1", qtype:"주제 추론",
+      question:"다음 글의 주제로 가장 적절한 것은?",
+      options:["이화마을 벽화 예술 운동의 역사","서울 도성 박물관의 전시 내용","서울 도성 도보 여행 첫날의 방문지와 경험","낙산과 서울 사대문의 지리적 특성","한국전쟁 이후 서울의 재건 과정"],
+      answer:2,
+      explanation:"첫날 여정(박물관→이화마을→낙산→혜화문)의 경험이 중심 내용. ③이 정답."
+    },
+    {
+      type:"mc", qnum:"2", qtype:"빈칸 추론",
+      question:"빈칸에 들어갈 말로 가장 적절한 것은?\n\nNaksan Mountain is also known as 'Camel Mountain' because of its ________ to a camel's back.",
+      options:["resemblance","reference","resistance","relevance","resemblance"],
+      answer:0,
+      explanation:"본문의 'resemblance to a camel's back' 그대로 사용. resemblance(유사함)가 정답."
+    },
+    {
+      type:"mc", qnum:"3", qtype:"어법 오류",
+      question:"밑줄 친 ①~⑤ 중 어법상 틀린 것은?\n\nI stopped by this museum ①to learn all about the history. Then I passed through Ihwa Maeul, a village ②that was home to refugees. The village is ③decorated with colorful paintings. They have ④turned the village into a delightful place ⑤where visitors can enjoying art.",
+      options:["①","②","③","④","⑤"],
+      answer:4,
+      explanation:"⑤ can enjoying → can enjoy. 조동사 뒤에는 동사원형이 와야 함."
+    },
+    {
+      type:"mc", qnum:"4", qtype:"내용 불일치",
+      question:"본문의 내용과 일치하지 않는 것은?",
+      options:["이화마을은 한국전쟁 이후 피난민들이 살던 곳이었다.","필자는 도보 전에 서울 도성 박물관에 들렀다.","낙산은 서울의 내사산 중 가장 높은 산이다.","첫날 도보는 혜화문에서 끝났다.","이화마을은 현재 벽화와 조각으로 꾸며져 있다."],
+      answer:2,
+      explanation:"본문에서 낙산은 '서울 네 내사산 중 가장 낮은 산(the lowest)'이라 했으므로 ③이 불일치."
+    },
+    {
+      type:"mc", qnum:"5", qtype:"글의 순서",
+      question:"주어진 문장 다음에 이어질 글의 순서로 가장 적절한 것은?\n\n「Full of excitement and anticipation, I began my journey at Heunginjimun Gate.」\n\n(A) After looking around in this charming little village, I crossed over Naksan Mountain.\n(B) Not far from there was the Seoul City Wall Museum.\n(C) Then I passed through Ihwa Maeul, a village that was home to refugees.",
+      options:["(A)-(B)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(B)-(A)-(C)","(C)-(B)-(A)"],
+      answer:1,
+      explanation:"흥인지문 출발 → 박물관(B) → 이화마을(C) → 낙산 이동(A) 순서가 여정 흐름과 일치."
+    }
+  ],
+
+  essay:[
+    {
+      label:"서술형 1",
+      question:"다음 빈칸 (A), (B)에 본문에서 알맞은 말을 찾아 쓰시오.\n\nThanks to Naksan Mountain's (A)________ slope, the day's walk ended up (B)________ pleasurable and relatively easy.",
+      condition:"조건: 본문에서 그대로 찾아 쓸 것 / (A) 1단어, (B) 1단어",
+      answer:"(A) gentle  (B) being"
+    },
+    {
+      label:"서술형 2",
+      question:"이화마을이 현재 어떤 곳으로 변모했는지 본문을 바탕으로 우리말로 서술하시오.",
+      condition:"조건: 완전한 문장으로 40자 내외",
+      answer:"알록달록한 벽화와 조각품으로 꾸며져 방문객들이 어디서든 예술을 즐길 수 있는 즐거운 공간이 되었다."
+    }
+  ]
+},
+
+// ──────────────────────────────────────────
+// 2: 1-3 Day 2
+// ──────────────────────────────────────────
+{
+  tag:"본문 1-3",
+  title:"Following the Wall – Day 2",
+  fullText:`The following day, my trip started from the Malbawi Information Center at the bottom of Bugaksan Mountain. This mountain is quite steep, so my progress was a lot slower than expected. However, it wasn't long before I found myself gazing at the spectacular view from the mountain's 342-meter summit. There, I spent some time looking upon the amazing panorama of Seoul, with its endless high-rise buildings stretching out below me.
+With my heart pumping, I continued my trek on the section of the wall over Inwangsan Mountain, which is famous for its wide variety of unusual rock formations. I was especially impressed by the tremendous size and unique shape of Seonbawi Rock, or "rock of the meditating monk."
+The path then split from the original route of the wall, but I was able to rejoin it at the site of what was once Donuimun Gate, one of the main gates. Although it was destroyed in 1915, the site is now marked by a wood and glass terrace.
+Finally, I came back to modern-day Seoul. My feet were sore, but I felt truly refreshed after walking along the roof of the city and taking in such marvelous views.`,
+
+  sentences:[
+    {
+      num:"①",
+      en:"The following day, my trip started from the Malbawi Information Center at the bottom of Bugaksan Mountain.",
+      slash:"The following day, / my trip started / from the Malbawi Information Center / at the bottom of Bugaksan Mountain.",
+      slashKo:"다음 날, / 나의 여정은 시작되었다 / 말바위 안내소에서 / 북악산 기슭에 있는.",
+      grammar:[
+        {title:"시간 표현 the following day", example:"The following day, my trip started", point:"★ the following day = the next day (다음 날). 시제 일치와 함께 출제."}
+      ]
+    },
+    {
+      num:"②",
+      en:"This mountain is quite steep, so my progress was a lot slower than expected.",
+      slash:"This mountain is quite steep, / so my progress was a lot slower / than expected.",
+      slashKo:"이 산은 꽤 가파르다, / 그래서 나의 진행 속도는 훨씬 더 느렸다 / 예상보다.",
+      grammar:[
+        {title:"비교급 강조 (a lot)", example:"a lot slower than expected", point:"★ 비교급 강조 부사: much, far, even, a lot, still. very는 비교급 강조 불가."},
+        {title:"than + 과거분사 (분사구문)", example:"than expected (= than was expected)", point:"★ than 뒤 주어+be동사 생략. 수능 독해 자주 등장."}
+      ]
+    },
+    {
+      num:"③",
+      en:"However, it wasn't long before I found myself gazing at the spectacular view from the mountain's 342-meter summit.",
+      slash:"However, it wasn't long / before I found myself gazing / at the spectacular view / from the mountain's 342-meter summit.",
+      slashKo:"그러나, 오래지 않아 / 나는 내가 바라보고 있음을 알았다 / 장관을 이루는 경치를 / 산의 342미터 정상에서.",
+      grammar:[
+        {title:"It is not long before ~ (관용 표현)", example:"it wasn't long before I found", point:"★ '오래지 않아 ~하다' 관용 표현. 수능 빈출."},
+        {title:"find + 목적어 + 현재분사 (지각동사형 5형식)", example:"found myself gazing", point:"★ find oneself -ing: '(나도 모르게) ~하고 있음을 알다'."}
+      ]
+    },
+    {
+      num:"④",
+      en:"There, I spent some time looking upon the amazing panorama of Seoul, with its endless high-rise buildings stretching out below me.",
+      slash:"There, I spent some time / looking upon the amazing panorama of Seoul, / with its endless high-rise buildings / stretching out below me.",
+      slashKo:"그곳에서, 나는 시간을 보냈다 / 서울의 놀라운 파노라마를 내려다보며, / 끝없이 펼쳐진 고층 건물들과 함께 / 내 아래로 뻗어 있는.",
+      grammar:[
+        {title:"with + 명사 + 분사 (부대상황)", example:"with its endless high-rise buildings stretching out", point:"★ 'with+명사+현재분사' = '~가 …하면서'. 동시 상황 표현."},
+        {title:"spend time -ing", example:"spent some time looking upon", point:"★ spend + 시간 + -ing 구문 재확인."}
+      ]
+    },
+    {
+      num:"⑤",
+      en:"With my heart pumping, I continued my trek on the section of the wall over Inwangsan Mountain, which is famous for its wide variety of unusual rock formations.",
+      slash:"With my heart pumping, / I continued my trek / on the section of the wall / over Inwangsan Mountain, / which is famous for its wide variety of unusual rock formations.",
+      slashKo:"심장이 두근거리며, / 나는 트레킹을 계속했다 / 성벽 구간에서 / 인왕산을 넘는, / 다양하고 특이한 암석 지형으로 유명한.",
+      grammar:[
+        {title:"with + 명사 + 현재분사 (부대상황)", example:"With my heart pumping", point:"★ '심장이 두근거리면서'. 분사의 의미상 주어가 명사임을 확인."},
+        {title:"be famous for + 명사", example:"famous for its wide variety of rock formations", point:"★ be famous for: '~로 유명하다'. a wide variety of = many kinds of."}
+      ]
+    },
+    {
+      num:"⑥",
+      en:"I was especially impressed by the tremendous size and unique shape of Seonbawi Rock, or \"rock of the meditating monk.\"",
+      slash:"I was especially impressed / by the tremendous size and unique shape / of Seonbawi Rock, / or \"rock of the meditating monk.\"",
+      slashKo:"나는 특히 감명받았다 / 엄청난 크기와 독특한 형태에 / 선바위의, / 즉 '선정하는 승려의 바위'.",
+      grammar:[
+        {title:"be impressed by (수동태 감정)", example:"was especially impressed by", point:"★ impress(감명을 주다) → be impressed by: '~에 감명받다'. 감정 동사의 수동태 빈출."}
+      ]
+    },
+    {
+      num:"⑦",
+      en:"The path then split from the original route of the wall, but I was able to rejoin it at the site of what was once Donuimun Gate, one of the main gates.",
+      slash:"The path then split / from the original route of the wall, / but I was able to rejoin it / at the site of what was once Donuimun Gate, / one of the main gates.",
+      slashKo:"길은 그런 다음 나뉘었다 / 성벽의 원래 경로에서, / 하지만 나는 다시 합류할 수 있었다 / 돈의문의 터에서, / 주요 성문 중 하나인.",
+      grammar:[
+        {title:"be able to (가능)", example:"was able to rejoin", point:"★ was able to = could. 과거 특정 상황의 능력은 was able to 선호."},
+        {title:"what 명사절 (관계대명사)", example:"the site of what was once Donuimun Gate", point:"★ what = the thing that. '한때 돈의문이었던 것의 터'. 선행사 포함 관계대명사."}
+      ]
+    },
+    {
+      num:"⑧",
+      en:"Although it was destroyed in 1915, the site is now marked by a wood and glass terrace.",
+      slash:"Although it was destroyed in 1915, / the site is now marked / by a wood and glass terrace.",
+      slashKo:"비록 1915년에 파괴되었지만, / 그 터는 지금 표시되어 있다 / 목재와 유리 테라스로.",
+      grammar:[
+        {title:"양보절 although + 수동태", example:"Although it was destroyed", point:"★ 양보절 내부의 수동태 구조. although 뒤 주어는 it(=Donuimun Gate)."}
+      ]
+    },
+    {
+      num:"⑨",
+      en:"Finally, I came back to modern-day Seoul.",
+      slash:"Finally, / I came back / to modern-day Seoul.",
+      slashKo:"마침내, / 나는 돌아왔다 / 현대의 서울로.",
+      grammar:[
+        {title:"come back to (귀환)", example:"came back to modern-day Seoul", point:"★ come back: 자동사 구동사. modern-day는 '현대의' 복합형용사."}
+      ]
+    },
+    {
+      num:"⑩",
+      en:"My feet were sore, but I felt truly refreshed after walking along the roof of the city and taking in such marvelous views.",
+      slash:"My feet were sore, / but I felt truly refreshed / after walking along the roof of the city / and taking in such marvelous views.",
+      slashKo:"발이 아팠지만, / 나는 진정으로 상쾌함을 느꼈다 / 도시의 지붕을 따라 걷고 / 그토록 경이로운 경치를 즐긴 후.",
+      grammar:[
+        {title:"feel + 형용사 (감각동사 2형식)", example:"felt truly refreshed", point:"★ feel은 2형식 감각동사. refreshed는 형용사(과거분사)로 주격보어."},
+        {title:"전치사 after + 동명사 병렬", example:"after walking ... and taking in", point:"★ after 뒤 두 동명사(walking, taking in)가 and로 병렬 연결. take in: '~을 흡수하다, 즐기다'."}
+      ]
+    }
+  ],
+
+  vocab:[
+    {word:"steep", meaning:"가파른", pos:"adj.", deriv:"steeply (adv.)"},
+    {word:"summit", meaning:"정상, 꼭대기", pos:"n.", deriv:"—"},
+    {word:"panorama", meaning:"파노라마, 전경", pos:"n.", deriv:"panoramic (adj.)"},
+    {word:"tremendous", meaning:"엄청난, 거대한", pos:"adj.", deriv:"tremendously (adv.)"},
+    {word:"rock formation", meaning:"암석 지형, 바위 형태", pos:"n.", deriv:"—"},
+    {word:"split", meaning:"나뉘다, 갈라지다", pos:"v.", deriv:"—"},
+    {word:"rejoin", meaning:"다시 합류하다", pos:"v.", deriv:"join (v.)"},
+    {word:"mark", meaning:"표시하다; 표시", pos:"v./n.", deriv:"marker (n.)"},
+    {word:"refreshed", meaning:"상쾌한", pos:"adj.", deriv:"refresh (v.), refreshing (adj.)"},
+    {word:"marvelous", meaning:"경이로운, 훌륭한", pos:"adj.", deriv:"marvel (n./v.)"}
+  ],
+
+  translation:`다음 날, 나의 여정은 북악산 기슭에 있는 말바위 안내소에서 시작되었다. 이 산은 꽤 가파르기 때문에 진행 속도가 예상보다 훨씬 더 느렸다. 그러나 오래지 않아 나는 342미터 정상에서 장관을 이루는 경치를 바라보고 있음을 알게 되었다. 그곳에서 끝없이 펼쳐진 고층 건물들이 내 아래로 뻗어 있는 서울의 놀라운 파노라마를 내려다보며 시간을 보냈다.
+
+심장이 두근거리며, 나는 다양하고 특이한 암석 지형으로 유명한 인왕산을 넘는 성벽 구간에서 트레킹을 계속했다. 특히 '선정하는 승려의 바위'라 불리는 선바위의 엄청난 크기와 독특한 형태에 감명받았다.
+
+그런 다음 길이 성벽의 원래 경로에서 벗어났지만, 나는 주요 성문 중 하나였던 돈의문 터에서 다시 합류할 수 있었다. 1915년에 파괴되었지만 지금은 그 터가 목재와 유리 테라스로 표시되어 있다.
+
+마침내, 나는 현대의 서울로 돌아왔다. 발이 아팠지만, 도시의 지붕을 따라 걷고 그토록 경이로운 경치를 즐긴 후 진정으로 상쾌함을 느꼈다.`,
+
+  topic:{
+    subject:"서울 도성 도보 여행 둘째 날의 도전과 경이로운 경험",
+    mainIdea:"필자는 가파른 북악산과 특이한 암석 지형의 인왕산을 넘으며 서울의 경이로운 전경을 감상했다. 돈의문 터를 지나 현대 서울로 돌아와 비록 발이 아팠지만 진정한 상쾌함을 느꼈다.",
+    structure:[
+      {step:"도입", text:"말바위 안내소에서 출발, 가파른 북악산 등반"},
+      {step:"전개1", text:"정상에서 서울 파노라마 감상 후 인왕산 구간 트레킹"},
+      {step:"전개2", text:"선바위 감상, 돈의문 터 방문"},
+      {step:"결론", text:"현대 서울 귀환, 지침 속에서도 상쾌함을 느낌"}
+    ]
+  },
+
+  quiz:[
+    {
+      type:"mc", qnum:"1", qtype:"주제 추론",
+      question:"다음 글의 주제로 가장 적절한 것은?",
+      options:["인왕산 암석 지형의 학술적 가치","돈의문의 파괴와 복원 과정","서울 도성 도보 둘째 날의 도전과 경이로운 경험","북악산 등반이 체력에 미치는 영향","서울 고층 건물의 발전 과정"],
+      answer:2,
+      explanation:"둘째 날 여정(북악산→인왕산→돈의문터)의 도전과 감동이 중심. ③이 정답."
+    },
+    {
+      type:"mc", qnum:"2", qtype:"빈칸 추론",
+      question:"빈칸에 들어갈 말로 가장 적절한 것은?\n\nHowever, it wasn't long before I found myself ________ at the spectacular view from the mountain's 342-meter summit.",
+      options:["looked","to look","looking","look","looks"],
+      answer:2,
+      explanation:"find oneself + -ing 구문. '나도 모르게 바라보고 있음을 알게 되다'에서 gazing/looking이 적절. ③ looking."
+    },
+    {
+      type:"mc", qnum:"3", qtype:"어법 오류",
+      question:"밑줄 친 ①~⑤ 중 어법상 틀린 것은?\n\nThis mountain is ①quite steep, so my progress was ②a lot slower than expected. It wasn't long ③before I found myself ④gazed at the view, with its high-rise buildings ⑤stretching out below me.",
+      options:["①","②","③","④","⑤"],
+      answer:3,
+      explanation:"④ gazed → gazing. find oneself -ing 구문에서 현재분사가 와야 함."
+    },
+    {
+      type:"mc", qnum:"4", qtype:"내용 불일치",
+      question:"본문의 내용과 일치하지 않는 것은?",
+      options:["둘째 날은 말바위 안내소에서 출발했다.","북악산은 가파르다고 묘사되었다.","선바위는 '선정하는 승려의 바위'라는 뜻이다.","돈의문은 1915년에 파괴되었다.","돈의문은 현재 원형 그대로 복원되어 있다."],
+      answer:4,
+      explanation:"본문에서 돈의문 터는 '목재와 유리 테라스로 표시(marked by a wood and glass terrace)'된다고 함. 원형 복원이 아님. ⑤가 불일치."
+    },
+    {
+      type:"mc", qnum:"5", qtype:"글의 순서",
+      question:"주어진 문장 다음에 이어질 글의 순서로 가장 적절한 것은?\n\n「The following day, my trip started from the Malbawi Information Center.」\n\n(A) The path then split from the original route of the wall, but I was able to rejoin it at the site of Donuimun Gate.\n(B) This mountain is quite steep, so my progress was a lot slower than expected.\n(C) With my heart pumping, I continued my trek over Inwangsan Mountain.",
+      options:["(A)-(B)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(B)-(A)-(C)","(C)-(B)-(A)"],
+      answer:1,
+      explanation:"말바위 안내소 출발 → 가파른 북악산(B) → 인왕산 구간(C) → 돈의문 터(A) 순서가 자연스러움."
+    }
+  ],
+
+  essay:[
+    {
+      label:"서술형 1",
+      question:"다음 빈칸 (A), (B)에 본문에서 알맞은 말을 찾아 쓰시오.\n\nInwangsan Mountain is (A)________ for its wide (B)________ of unusual rock formations.",
+      condition:"조건: 본문에서 그대로 찾아 쓸 것 / 각 1단어",
+      answer:"(A) famous  (B) variety"
+    },
+    {
+      label:"서술형 2",
+      question:"필자가 둘째 날 도보 여행 후 어떤 감정을 느꼈는지 본문에서 근거를 들어 우리말로 서술하시오.",
+      condition:"조건: 이유와 감정을 함께 서술할 것 / 40자 내외",
+      answer:"발이 아팠지만 도시의 지붕을 걷고 경이로운 경치를 즐긴 후 진정으로 상쾌함을 느꼈다."
+    }
+  ]
+},
+
+// ──────────────────────────────────────────
+// 3: 1-4 Day 3
+// ──────────────────────────────────────────
+{
+  tag:"본문 1-4",
+  title:"Following the Wall – Day 3",
+  fullText:`On the third day, I started my trek from Sungnyemun Gate, which is also known as Namdaemun Gate, and walked to Namdaemun Market. It is the largest traditional market in Korea, with over 10,000 shops and stalls standing along its streets. I enjoyed the lively atmosphere with a crowd of people there.
+Then I wandered along a reconstructed section of the city wall on the slopes of Namsan Mountain. There were many visitors at the mountain's summit, from which N Seoul Tower―the city's most recognizable landmark―rises upward toward the sky. I also enjoyed watching an exciting and energetic traditional Korean dance performance in front of the tower.
+After the performance finished, I descended Namsan Mountain, following the wall. Eventually, I found myself back in the place where the trek had all begun, Heunginjimun Gate.
+What an experience! Though I was exhausted by the end, the trek was absolutely worth it. I discovered many different aspects of Seoul on this journey. While today Seoul pulses with modernity, the Seoul City Wall serves as a reminder of its gone but not forgotten past. I feel a great sense of accomplishment now for having circled such remarkable historic sites.`,
+
+  sentences:[
+    {
+      num:"①",
+      en:"On the third day, I started my trek from Sungnyemun Gate, which is also known as Namdaemun Gate, and walked to Namdaemun Market.",
+      slash:"On the third day, / I started my trek from Sungnyemun Gate, / which is also known as Namdaemun Gate, / and walked to Namdaemun Market.",
+      slashKo:"셋째 날, / 나는 숭례문에서 트레킹을 시작했다, / 남대문으로도 알려진, / 그리고 남대문 시장으로 걸어갔다.",
+      grammar:[
+        {title:"계속적 용법 관계대명사 which", example:", which is also known as Namdaemun Gate,", point:"★ 삽입된 관계절로 앞 명사 부연. be known as: '~로 알려지다'."}
+      ]
+    },
+    {
+      num:"②",
+      en:"It is the largest traditional market in Korea, with over 10,000 shops and stalls standing along its streets.",
+      slash:"It is the largest traditional market in Korea, / with over 10,000 shops and stalls / standing along its streets.",
+      slashKo:"그것은 한국에서 가장 큰 전통 시장이다, / 10,000개 이상의 가게와 노점이 / 그 거리를 따라 서 있는.",
+      grammar:[
+        {title:"최상급 표현 (the + 최상급 + in + 범위)", example:"the largest traditional market in Korea", point:"★ 최상급+in+단수 장소 명사. 최상급 강조에 the very도 쓰임."},
+        {title:"with + 명사 + 현재분사 (부대상황)", example:"with over 10,000 shops standing along", point:"★ 'with+명사+분사'로 추가 상황 묘사."}
+      ]
+    },
+    {
+      num:"③",
+      en:"I enjoyed the lively atmosphere with a crowd of people there.",
+      slash:"I enjoyed the lively atmosphere / with a crowd of people there.",
+      slashKo:"나는 그곳에서 많은 사람들과 함께 / 활기찬 분위기를 즐겼다.",
+      grammar:[
+        {title:"enjoy + 명사 (목적어)", example:"enjoyed the lively atmosphere", point:"★ enjoy 뒤에 명사 또는 동명사. a crowd of: '많은 ~'."}
+      ]
+    },
+    {
+      num:"④",
+      en:"Then I wandered along a reconstructed section of the city wall on the slopes of Namsan Mountain.",
+      slash:"Then I wandered along / a reconstructed section of the city wall / on the slopes of Namsan Mountain.",
+      slashKo:"그런 다음 나는 거닐었다 / 복원된 도성 구간을 따라 / 남산의 사면에 있는.",
+      grammar:[
+        {title:"과거분사 형용사 역할 (reconstructed)", example:"a reconstructed section", point:"★ 과거분사가 명사를 앞에서 수식. '복원된' 상태 의미."}
+      ]
+    },
+    {
+      num:"⑤",
+      en:"There were many visitors at the mountain's summit, from which N Seoul Tower―the city's most recognizable landmark―rises upward toward the sky.",
+      slash:"There were many visitors / at the mountain's summit, / from which N Seoul Tower / ―the city's most recognizable landmark― / rises upward toward the sky.",
+      slashKo:"많은 방문객들이 있었다 / 산 정상에, / 그곳에서 N서울타워가 / ―도시에서 가장 알아보기 쉬운 랜드마크인― / 하늘을 향해 솟아오른다.",
+      grammar:[
+        {title:"전치사+관계대명사 from which", example:"from which N Seoul Tower rises", point:"★ 관계부사 where 대신 from which. rises from the summit→from which rises."},
+        {title:"삽입 동격 (dash)", example:"―the city's most recognizable landmark―", point:"★ 대시(—)로 삽입된 동격 표현. 독해 시 삽입구 처리 중요."}
+      ]
+    },
+    {
+      num:"⑥",
+      en:"I also enjoyed watching an exciting and energetic traditional Korean dance performance in front of the tower.",
+      slash:"I also enjoyed / watching an exciting and energetic / traditional Korean dance performance / in front of the tower.",
+      slashKo:"나는 또한 즐겼다 / 흥미진진하고 활기찬 / 전통 한국 무용 공연을 보는 것을 / 타워 앞에서.",
+      grammar:[
+        {title:"enjoy + 동명사 목적어", example:"enjoyed watching a performance", point:"★ enjoy는 동명사만 목적어로 취함. enjoy to watch는 오류."}
+      ]
+    },
+    {
+      num:"⑦",
+      en:"After the performance finished, I descended Namsan Mountain, following the wall.",
+      slash:"After the performance finished, / I descended Namsan Mountain, / following the wall.",
+      slashKo:"공연이 끝난 후, / 나는 남산을 내려갔다, / 성벽을 따라.",
+      grammar:[
+        {title:"분사구문 (동시 동작)", example:"I descended ..., following the wall", point:"★ following the wall = while following the wall. 분사구문으로 동시 동작 표현."}
+      ]
+    },
+    {
+      num:"⑧",
+      en:"Eventually, I found myself back in the place where the trek had all begun, Heunginjimun Gate.",
+      slash:"Eventually, / I found myself back / in the place / where the trek had all begun, / Heunginjimun Gate.",
+      slashKo:"결국, / 나는 내가 돌아와 있음을 알았다 / 그 장소에 / 트레킹이 시작되었던, / 흥인지문.",
+      grammar:[
+        {title:"관계부사 where", example:"the place where the trek had all begun", point:"★ 장소 선행사+where 관계절. had begun은 과거완료로 '더 이전 사건' 표시."},
+        {title:"과거완료 (had + p.p.)", example:"the trek had all begun", point:"★ 현재보다 이전인 과거 시점을 기준으로 더 먼저 일어난 일. 대과거 용법."}
+      ]
+    },
+    {
+      num:"⑨",
+      en:"What an experience!",
+      slash:"What an experience!",
+      slashKo:"정말 대단한 경험이었다!",
+      grammar:[
+        {title:"감탄문 What + (a/an) + 명사", example:"What an experience!", point:"★ What + a/an + 형용사 + 명사 + (주어+동사)! 형용사 생략 가능."}
+      ]
+    },
+    {
+      num:"⑩",
+      en:"Though I was exhausted by the end, the trek was absolutely worth it.",
+      slash:"Though I was exhausted by the end, / the trek was absolutely worth it.",
+      slashKo:"마지막에 지쳤지만, / 트레킹은 절대적으로 그만한 가치가 있었다.",
+      grammar:[
+        {title:"양보절 though + be worth -ing/it", example:"was absolutely worth it", point:"★ be worth + 명사/동명사: '~할 가치가 있다'. worth it = worth the effort."}
+      ]
+    },
+    {
+      num:"⑪",
+      en:"While today Seoul pulses with modernity, the Seoul City Wall serves as a reminder of its gone but not forgotten past.",
+      slash:"While today Seoul pulses with modernity, / the Seoul City Wall serves as a reminder / of its gone but not forgotten past.",
+      slashKo:"오늘날 서울이 현대성으로 활기차게 뛰는 반면, / 서울 도성은 상기시켜 주는 것으로 작용한다 / 사라졌지만 잊히지 않은 과거의.",
+      grammar:[
+        {title:"while (대조의 접속사)", example:"While today Seoul pulses with modernity", point:"★ while: 시간(~하는 동안) 또는 대조(~인 반면). 여기서는 대조."},
+        {title:"serve as + 명사 (역할)", example:"serves as a reminder", point:"★ serve as: '~로서 역할을 하다'. 수능 빈출 표현."}
+      ]
+    },
+    {
+      num:"⑫",
+      en:"I feel a great sense of accomplishment now for having circled such remarkable historic sites.",
+      slash:"I feel a great sense of accomplishment now / for having circled / such remarkable historic sites.",
+      slashKo:"나는 지금 큰 성취감을 느낀다 / 순환했기 때문에 / 이렇게 훌륭한 역사적 장소들을.",
+      grammar:[
+        {title:"완료 동명사 for having + p.p.", example:"for having circled such historic sites", point:"★ 전치사 for 뒤 완료 동명사: 주절 동사보다 이전 시제의 동작을 나타냄."},
+        {title:"a sense of accomplishment", example:"a great sense of accomplishment", point:"★ 수능 자주 등장하는 명사구. sense of + 추상명사 형태."}
+      ]
+    }
+  ],
+
+  vocab:[
+    {word:"wander", meaning:"거닐다, 배회하다", pos:"v.", deriv:"wanderer (n.)"},
+    {word:"reconstructed", meaning:"복원된, 재건된", pos:"adj.", deriv:"reconstruct (v.), reconstruction (n.)"},
+    {word:"recognizable", meaning:"알아볼 수 있는", pos:"adj.", deriv:"recognize (v.), recognition (n.)"},
+    {word:"landmark", meaning:"랜드마크, 주요 건물", pos:"n.", deriv:"—"},
+    {word:"descend", meaning:"내려가다", pos:"v.", deriv:"descent (n.), descendant (n.)"},
+    {word:"exhausted", meaning:"지친, 기진맥진한", pos:"adj.", deriv:"exhaust (v.), exhaustion (n.)"},
+    {word:"accomplishment", meaning:"성취, 업적", pos:"n.", deriv:"accomplish (v.)"},
+    {word:"pulse", meaning:"활기차게 뛰다; 맥박", pos:"v./n.", deriv:"—"},
+    {word:"modernity", meaning:"현대성", pos:"n.", deriv:"modern (adj.), modernize (v.)"},
+    {word:"remarkable", meaning:"놀라운, 주목할 만한", pos:"adj.", deriv:"remarkably (adv.)"}
+  ],
+
+  translation:`셋째 날, 나는 남대문으로도 알려진 숭례문에서 트레킹을 시작하여 남대문 시장으로 걸어갔다. 그곳은 10,000개 이상의 가게와 노점이 거리를 따라 늘어선 한국 최대의 전통 시장이다. 나는 그곳에서 많은 사람들과 함께 활기찬 분위기를 즐겼다.
+
+그런 다음 남산 사면의 복원된 도성 구간을 따라 거닐었다. 산 정상에는 많은 방문객들이 있었고, 그곳에서 도시에서 가장 알아보기 쉬운 랜드마크인 N서울타워가 하늘을 향해 솟아오른다. 나는 타워 앞에서 펼쳐지는 흥미진진하고 활기찬 전통 한국 무용 공연도 즐겼다.
+
+공연이 끝난 후, 나는 성벽을 따라 남산을 내려갔다. 결국, 나는 트레킹이 시작되었던 바로 그 장소, 흥인지문으로 돌아와 있음을 알게 되었다.
+
+정말 대단한 경험이었다! 마지막에는 지쳤지만, 트레킹은 절대적으로 그만한 가치가 있었다. 나는 이 여정에서 서울의 많은 다양한 면을 발견했다. 오늘날 서울이 현대성으로 활기차게 뛰는 반면, 서울 도성은 사라졌지만 잊히지 않은 과거를 상기시켜 주는 역할을 한다. 나는 이렇게 훌륭한 역사적 장소들을 순환한 것에 대해 지금 큰 성취감을 느낀다.`,
+
+  topic:{
+    subject:"서울 도성 도보 여행 셋째 날과 전체 여정의 감동",
+    mainIdea:"필자는 남대문 시장, 남산, N서울타워를 거쳐 출발점인 흥인지문으로 돌아오며 여정을 완성했다. 현대 서울과 역사적 성벽의 공존이 주는 의미를 깨달으며 큰 성취감을 느꼈다.",
+    structure:[
+      {step:"도입", text:"숭례문 출발, 남대문 시장의 활기찬 분위기 경험"},
+      {step:"전개1", text:"남산 복원 구간 도보, N서울타워와 전통 무용 공연 관람"},
+      {step:"전개2", text:"출발점 흥인지문으로 귀환, 완주 성공"},
+      {step:"결론", text:"서울 도성이 과거와 현재를 잇는 존재임을 깨닫고 성취감 표현"}
+    ]
+  },
+
+  quiz:[
+    {
+      type:"mc", qnum:"1", qtype:"주제 추론",
+      question:"다음 글의 주제로 가장 적절한 것은?",
+      options:["남대문 시장의 경제적 규모","N서울타워의 건축적 특징","서울 도성 도보 셋째 날과 여정의 의미","숭례문의 역사와 별칭","남산의 지리적 위치"],
+      answer:2,
+      explanation:"셋째 날 여정의 경험과 서울 도성의 의미에 대한 필자의 감상이 중심. ③이 정답."
+    },
+    {
+      type:"mc", qnum:"2", qtype:"빈칸 추론",
+      question:"빈칸에 들어갈 말로 가장 적절한 것은?\n\nWhile today Seoul pulses with modernity, the Seoul City Wall serves as a ________ of its gone but not forgotten past.",
+      options:["symbol","reminder","barrier","feature","record"],
+      answer:1,
+      explanation:"본문의 'serves as a reminder of its ... past' 그대로 사용. reminder(상기시키는 것)이 정답."
+    },
+    {
+      type:"mc", qnum:"3", qtype:"어법 오류",
+      question:"밑줄 친 ①~⑤ 중 어법상 틀린 것은?\n\nI also enjoyed ①watching a dance performance. After the performance ②finished, I descended Namsan Mountain, ③followed the wall. Eventually, I found myself back in the place ④where the trek had begun, ⑤Heunginjimun Gate.",
+      options:["①","②","③","④","⑤"],
+      answer:2,
+      explanation:"③ followed → following. 동시 동작을 나타내는 분사구문이므로 현재분사 following이 맞음."
+    },
+    {
+      type:"mc", qnum:"4", qtype:"내용 불일치",
+      question:"본문의 내용과 일치하지 않는 것은?",
+      options:["셋째 날은 숭례문에서 출발했다.","남대문 시장은 한국 최대의 전통 시장이다.","필자는 N서울타워에서 전통 무용을 관람했다.","필자는 셋째 날 한강에서 여정을 마쳤다.","필자는 여정을 통해 큰 성취감을 느꼈다."],
+      answer:3,
+      explanation:"필자의 셋째 날 여정은 흥인지문에서 끝났다. 한강이 아님. ④가 불일치."
+    },
+    {
+      type:"mc", qnum:"5", qtype:"글의 순서",
+      question:"주어진 문장 다음에 이어질 글의 순서로 가장 적절한 것은?\n\n「On the third day, I started my trek from Sungnyemun Gate and walked to Namdaemun Market.」\n\n(A) After the performance finished, I descended Namsan Mountain and found myself back at Heunginjimun Gate.\n(B) I enjoyed the lively atmosphere with a crowd of people there.\n(C) Then I wandered along a reconstructed section of the wall and enjoyed watching a Korean dance performance.",
+      options:["(A)-(B)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(B)-(A)-(C)","(C)-(B)-(A)"],
+      answer:1,
+      explanation:"시장 도착(B) → 남산 구간 및 공연(C) → 흥인지문 귀환(A) 순서가 자연스러운 여정 흐름."
+    }
+  ],
+
+  essay:[
+    {
+      label:"서술형 1",
+      question:"다음 빈칸 (A), (B)에 본문에서 알맞은 말을 찾아 쓰시오.\n\nWhile today Seoul (A)________ with modernity, the Seoul City Wall serves as a (B)________ of its gone but not forgotten past.",
+      condition:"조건: 본문에서 그대로 찾아 쓸 것 / 각 1단어",
+      answer:"(A) pulses  (B) reminder"
+    },
+    {
+      label:"서술형 2",
+      question:"서울 도성의 현대적 의미를 필자의 관점에서 우리말로 서술하시오.",
+      condition:"조건: 완전한 문장으로 40자 내외",
+      answer:"현대성으로 넘치는 서울에서 서울 도성은 사라졌지만 잊히지 않은 과거를 상기시켜 주는 역할을 한다."
+    }
+  ]
+},
+
+// ──────────────────────────────────────────
+// 4: 2-1 Introduction (Holman)
+// ──────────────────────────────────────────
+{
+  tag:"본문 2-1",
+  title:"The Incredible Adventures of James Holman",
+  fullText:`How far do you think you will be able to travel throughout your life? It is said that Marco Polo covered more than 20,000 kilometers on his great journeys. By most standards, that is an impressive distance. Yet it seems almost insignificant when it is compared to the distance that James Holman covered. This lesser-known explorer traveled more than 400,000 kilometers in the 1800s! Holman's travels are incredible enough on their own, but there is an additional fact that makes his story even more remarkable: he was completely blind.
+Holman was born in England in 1786 and entered the British Royal Navy as a volunteer at the age of 12. After several years at sea, he became a rising young officer. His career ended abruptly, though, when he contracted an unknown illness that caused him to lose his vision. He was only 25 years old when he became permanently blind and was compelled to leave the navy.`,
+
+  sentences:[
+    {
+      num:"①",
+      en:"How far do you think you will be able to travel throughout your life?",
+      slash:"How far / do you think / you will be able to travel / throughout your life?",
+      slashKo:"얼마나 멀리 / 당신은 생각하는가 / 여행할 수 있을 것이라고 / 평생 동안?",
+      grammar:[
+        {title:"간접 의문문 어순 (do you think 삽입)", example:"How far do you think you will...?", point:"★ 'do you think/believe/suppose' 삽입 시 뒤는 평서문 어순. How far will you travel? → How far do you think you will travel?"}
+      ]
+    },
+    {
+      num:"②",
+      en:"It is said that Marco Polo covered more than 20,000 kilometers on his great journeys.",
+      slash:"It is said / that Marco Polo covered / more than 20,000 kilometers / on his great journeys.",
+      slashKo:"~라고 전해진다 / 마르코 폴로가 이동했다고 / 20,000킬로미터 이상을 / 그의 위대한 여행들에서.",
+      grammar:[
+        {title:"비인칭 주어 It + 수동태 (It is said that)", example:"It is said that Marco Polo covered...", point:"★ 'It is said that ~' = 'People say that ~' = 'Marco Polo is said to have covered'. 3가지 형태 변환 출제."}
+      ]
+    },
+    {
+      num:"③",
+      en:"By most standards, that is an impressive distance.",
+      slash:"By most standards, / that is an impressive distance.",
+      slashKo:"대부분의 기준으로, / 그것은 인상적인 거리이다.",
+      grammar:[
+        {title:"전치사 by (기준)", example:"By most standards", point:"★ by: '~에 의하면, ~기준으로'. 기준을 나타내는 전치사 용법."}
+      ]
+    },
+    {
+      num:"④",
+      en:"Yet it seems almost insignificant when it is compared to the distance that James Holman covered.",
+      slash:"Yet it seems almost insignificant / when it is compared / to the distance / that James Holman covered.",
+      slashKo:"그러나 그것은 거의 하찮아 보인다 / 비교될 때 / 거리와 / 제임스 홀먼이 이동한.",
+      grammar:[
+        {title:"목적격 관계대명사 that", example:"the distance that James Holman covered", point:"★ covered의 목적어 역할. the distance가 선행사. which와 교체 가능."},
+        {title:"수동태 when-절", example:"when it is compared to", point:"★ compare A to B → A be compared to B. 비교의 수동태."}
+      ]
+    },
+    {
+      num:"⑤",
+      en:"This lesser-known explorer traveled more than 400,000 kilometers in the 1800s!",
+      slash:"This lesser-known explorer / traveled more than 400,000 kilometers / in the 1800s!",
+      slashKo:"이 덜 알려진 탐험가는 / 400,000킬로미터 이상을 여행했다 / 1800년대에!",
+      grammar:[
+        {title:"비교급 형용사 lesser-known", example:"lesser-known explorer", point:"★ lesser-known: '덜 알려진' 복합 비교급 형용사. more와 less의 비교급 구분."}
+      ]
+    },
+    {
+      num:"⑥",
+      en:"Holman's travels are incredible enough on their own, but there is an additional fact that makes his story even more remarkable: he was completely blind.",
+      slash:"Holman's travels are incredible enough on their own, / but there is an additional fact / that makes his story even more remarkable: / he was completely blind.",
+      slashKo:"홀먼의 여행들은 그 자체만으로도 충분히 믿기 어렵지만, / 추가적인 사실이 있다 / 그의 이야기를 훨씬 더 놀랍게 만드는: / 그는 완전히 시각 장애인이었다.",
+      grammar:[
+        {title:"주격 관계대명사 that + 5형식", example:"a fact that makes his story remarkable", point:"★ make + 목적어 + 형용사(5형식). that은 주격 관계대명사."},
+        {title:"비교급 강조 even", example:"even more remarkable", point:"★ even: 비교급 강조. much, far, still, a lot, even으로 강조 가능."}
+      ]
+    },
+    {
+      num:"⑦",
+      en:"Holman was born in England in 1786 and entered the British Royal Navy as a volunteer at the age of 12.",
+      slash:"Holman was born in England in 1786 / and entered the British Royal Navy / as a volunteer / at the age of 12.",
+      slashKo:"홀먼은 1786년 영국에서 태어났고 / 영국 왕립 해군에 입대했다 / 자원병으로 / 12세에.",
+      grammar:[
+        {title:"병렬 구조 (was born and entered)", example:"was born ... and entered", point:"★ 두 동사가 and로 병렬. 시제 일치 확인."},
+        {title:"as + 명사 (자격·역할)", example:"as a volunteer", point:"★ as: '~로서' 자격/역할 표현."}
+      ]
+    },
+    {
+      num:"⑧",
+      en:"After several years at sea, he became a rising young officer.",
+      slash:"After several years at sea, / he became a rising young officer.",
+      slashKo:"바다에서 몇 년 후, / 그는 떠오르는 젊은 장교가 되었다.",
+      grammar:[
+        {title:"become + 명사 (2형식)", example:"became a rising young officer", point:"★ become 뒤에 명사 또는 형용사가 보어로 옴. rising: 현재분사 형용사."}
+      ]
+    },
+    {
+      num:"⑨",
+      en:"His career ended abruptly, though, when he contracted an unknown illness that caused him to lose his vision.",
+      slash:"His career ended abruptly, though, / when he contracted an unknown illness / that caused him to lose his vision.",
+      slashKo:"그의 경력은 갑자기 끝났다, 그러나, / 그가 알 수 없는 질병에 걸렸을 때 / 그가 시력을 잃게 만든.",
+      grammar:[
+        {title:"관계대명사 that + cause + 목적어 + to-V", example:"an illness that caused him to lose his vision", point:"★ cause + 목적어 + to-V: '~가 …하게 만들다/야기하다'. 5형식."},
+        {title:"삽입어 though", example:"ended abruptly, though,", point:"★ though가 문중에 삽입되어 '그러나'의 의미. 문두의 Though와 구별."}
+      ]
+    },
+    {
+      num:"⑩",
+      en:"He was only 25 years old when he became permanently blind and was compelled to leave the navy.",
+      slash:"He was only 25 years old / when he became permanently blind / and was compelled to leave the navy.",
+      slashKo:"그는 겨우 25세였다 / 영구적으로 시각 장애인이 되었을 때 / 그리고 해군을 떠나도록 강요받았다.",
+      grammar:[
+        {title:"be compelled to-V (수동태 강제)", example:"was compelled to leave the navy", point:"★ compel + 목적어 + to-V → be compelled to-V. '~하도록 강요받다'. be forced to와 유사."}
+      ]
+    }
+  ],
+
+  vocab:[
+    {word:"insignificant", meaning:"하찮은, 중요하지 않은", pos:"adj.", deriv:"significant (adj.), significance (n.)"},
+    {word:"incredible", meaning:"믿기 어려운, 놀라운", pos:"adj.", deriv:"incredibly (adv.)"},
+    {word:"remarkable", meaning:"놀라운, 주목할 만한", pos:"adj.", deriv:"remarkably (adv.)"},
+    {word:"volunteer", meaning:"자원병; 자원하다", pos:"n./v.", deriv:"voluntary (adj.)"},
+    {word:"contract", meaning:"(병에) 걸리다; 계약", pos:"v./n.", deriv:"contractor (n.)"},
+    {word:"abruptly", meaning:"갑자기", pos:"adv.", deriv:"abrupt (adj.)"},
+    {word:"permanently", meaning:"영구적으로", pos:"adv.", deriv:"permanent (adj.)"},
+    {word:"compel", meaning:"강요하다", pos:"v.", deriv:"compulsion (n.), compulsory (adj.)"},
+    {word:"vision", meaning:"시력; 시야; 비전", pos:"n.", deriv:"visual (adj.)"},
+    {word:"cover", meaning:"이동하다; 덮다", pos:"v.", deriv:"coverage (n.)"}
+  ],
+
+  translation:`당신은 평생 동안 얼마나 멀리 여행할 수 있을 것이라고 생각하는가? 마르코 폴로는 그의 위대한 여행들에서 20,000킬로미터 이상을 이동했다고 전해진다. 대부분의 기준으로 그것은 인상적인 거리이다. 그러나 제임스 홀먼이 이동한 거리와 비교될 때 그것은 거의 하찮아 보인다. 이 덜 알려진 탐험가는 1800년대에 400,000킬로미터 이상을 여행했다! 홀먼의 여행들은 그 자체만으로도 충분히 믿기 어렵지만, 그의 이야기를 훨씬 더 놀랍게 만드는 추가적인 사실이 있다. 바로 그가 완전히 시각 장애인이었다는 것이다.
+
+홀먼은 1786년 영국에서 태어났고 12세에 자원병으로 영국 왕립 해군에 입대했다. 바다에서 몇 년을 보낸 후 떠오르는 젊은 장교가 되었다. 그러나 알 수 없는 질병에 걸려 시력을 잃으면서 그의 경력은 갑자기 끝났다. 그는 영구적으로 시각 장애인이 되어 해군을 떠나야 했을 때 겨우 25세였다.`,
+
+  topic:{
+    subject:"시각 장애인 탐험가 제임스 홀먼의 소개와 놀라운 여행 규모",
+    mainIdea:"19세기 탐험가 제임스 홀먼은 완전히 시각 장애인이었음에도 불구하고 400,000킬로미터 이상을 여행했다. 25세에 실명하여 해군을 떠났지만 그것이 그의 여정을 막지 못했다.",
+    structure:[
+      {step:"도입", text:"마르코 폴로와의 비교를 통해 홀먼 소개"},
+      {step:"전개1", text:"홀먼의 엄청난 여행 거리와 시각 장애라는 사실 공개"},
+      {step:"전개2", text:"홀먼의 초기 생애: 해군 입대와 성장"},
+      {step:"결론", text:"실명으로 인한 강제 전역, 그의 비극적 전환점"}
+    ]
+  },
+
+  quiz:[
+    {
+      type:"mc", qnum:"1", qtype:"주제 추론",
+      question:"다음 글의 주제로 가장 적절한 것은?",
+      options:["마르코 폴로의 위대한 여정과 업적","19세기 영국 해군의 훈련 방식","시각 장애를 딛고 세계를 여행한 홀먼의 소개","시각 장애인의 일상생활 적응 방법","19세기 탐험가들의 이동 거리 비교"],
+      answer:2,
+      explanation:"홀먼의 엄청난 여행 거리와 그가 시각 장애인이었다는 충격적 사실 소개가 핵심. ③이 정답."
+    },
+    {
+      type:"mc", qnum:"2", qtype:"빈칸 추론",
+      question:"빈칸에 들어갈 말로 가장 적절한 것은?\n\nHolman's travels are incredible enough on their own, but there is an additional fact that makes his story even more remarkable: he was ________ blind.",
+      options:["partially","temporarily","completely","occasionally","slightly"],
+      answer:2,
+      explanation:"본문의 'completely blind'가 정답. 완전한 시각 장애임을 강조."
+    },
+    {
+      type:"mc", qnum:"3", qtype:"어법 오류",
+      question:"밑줄 친 ①~⑤ 중 어법상 틀린 것은?\n\nIt ①is said that Marco Polo ②covered more than 20,000 km. Yet it seems almost ③insignificant when ④compared to the distance that Holman covered. He ⑤was compelled leaving the navy.",
+      options:["①","②","③","④","⑤"],
+      answer:4,
+      explanation:"⑤ was compelled leaving → was compelled to leave. compel+목적어+to-V이므로 수동태에서 be compelled to-V."
+    },
+    {
+      type:"mc", qnum:"4", qtype:"내용 불일치",
+      question:"본문의 내용과 일치하지 않는 것은?",
+      options:["홀먼은 1800년대에 400,000km 이상을 여행했다.","홀먼은 12세에 영국 왕립 해군에 자원입대했다.","홀먼은 병을 얻어 25세에 시력을 잃었다.","마르코 폴로의 이동 거리는 홀먼보다 훨씬 더 많다.","홀먼은 완전히 시각 장애인이었다."],
+      answer:3,
+      explanation:"마르코 폴로의 이동 거리(20,000km)는 홀먼(400,000km)보다 훨씬 적다. ④가 불일치."
+    },
+    {
+      type:"mc", qnum:"5", qtype:"글의 순서",
+      question:"주어진 문장 다음에 이어질 글의 순서로 가장 적절한 것은?\n\n「How far do you think you will be able to travel throughout your life?」\n\n(A) Holman was born in England in 1786 and entered the British Royal Navy at the age of 12.\n(B) It is said that Marco Polo covered more than 20,000 kilometers.\n(C) Holman's travels are incredible enough, but he was completely blind.",
+      options:["(A)-(B)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(B)-(A)-(C)","(C)-(B)-(A)"],
+      answer:1,
+      explanation:"마르코 폴로 소개(B) → 홀먼의 충격적 사실(C) → 홀먼의 초기 생애(A) 순서가 자연스럽게 연결됨."
+    }
+  ],
+
+  essay:[
+    {
+      label:"서술형 1",
+      question:"다음 빈칸 (A), (B)에 본문에서 알맞은 말을 찾아 쓰시오.\n\nHis career ended (A)________, when he contracted an unknown illness that caused him to lose his (B)________.",
+      condition:"조건: 본문에서 그대로 찾아 쓸 것 / 각 1단어",
+      answer:"(A) abruptly  (B) vision"
+    },
+    {
+      label:"서술형 2",
+      question:"'It is said that Marco Polo covered more than 20,000 kilometers.'를 Marco Polo를 주어로 바꾸어 쓰시오.",
+      condition:"조건: Marco Polo is said to ...의 형태로 완성할 것",
+      answer:"Marco Polo is said to have covered more than 20,000 kilometers on his great journeys."
+    }
+  ]
+},
+
+// ──────────────────────────────────────────
+// 5: 2-2 The Journey
+// ──────────────────────────────────────────
+{
+  tag:"본문 2-2",
+  title:"James Holman – Confronting Adversity",
+  fullText:`Most people in this situation would sink into the depths of despair and grief. However, Holman did not let his misfortune keep him down and confronted his situation. He tried to keep a positive attitude and started learning how to use an iron-tipped stick to find his way around. With each tap, he could use his hearing to understand his surroundings better. Holman finally became confident in his mobility and was even able to navigate London's busy streets without assistance. With his confidence growing, he decided to go on a great adventure by traveling through France and Italy.
+By the time Holman arrived in Naples in 1821, he had become an expert traveler. He even became the first blind man to ascend Mount Vesuvius. At the time of his ascent, the mountain was in the middle of intense volcanic activity. As Holman and his two companions approached the unstable edge of the volcano, the ground became almost too hot to walk on. His companions wanted to turn back, but Holman was unafraid. He courageously proceeded until he reached the summit.`,
+
+  sentences:[
+    {
+      num:"①",
+      en:"Most people in this situation would sink into the depths of despair and grief.",
+      slash:"Most people in this situation / would sink / into the depths of despair and grief.",
+      slashKo:"이런 상황에 처한 대부분의 사람들은 / 빠져들 것이다 / 절망과 슬픔의 깊이로.",
+      grammar:[
+        {title:"가정법 과거 (would + 동사원형)", example:"would sink into the depths", point:"★ 과거 사실과 반대 가정. '대부분은 빠져들었을 것이다' 뉘앙스. 조동사 would로 가능성 표현."}
+      ]
+    },
+    {
+      num:"②",
+      en:"However, Holman did not let his misfortune keep him down and confronted his situation.",
+      slash:"However, Holman did not let / his misfortune keep him down / and confronted his situation.",
+      slashKo:"그러나, 홀먼은 ~하도록 허락하지 않았다 / 자신의 불행이 그를 주저앉히도록 / 그리고 자신의 상황에 맞섰다.",
+      grammar:[
+        {title:"let + 목적어 + 동사원형 (사역동사)", example:"did not let his misfortune keep him down", point:"★ let + O + V(원형). 부정으로 '~하게 내버려 두지 않다'. keep down: '의기소침하게 만들다'."}
+      ]
+    },
+    {
+      num:"③",
+      en:"He tried to keep a positive attitude and started learning how to use an iron-tipped stick to find his way around.",
+      slash:"He tried to keep a positive attitude / and started learning / how to use an iron-tipped stick / to find his way around.",
+      slashKo:"그는 긍정적인 태도를 유지하려 했다 / 그리고 배우기 시작했다 / 철심 지팡이 사용법을 / 주변을 찾아가기 위해.",
+      grammar:[
+        {title:"try to-V vs. start + 동명사/to부정사", example:"tried to keep ... started learning", point:"★ try to-V: '~하려고 노력하다'. start는 동명사와 to부정사 모두 가능."},
+        {title:"의문사 + to부정사 (how to-V)", example:"how to use an iron-tipped stick", point:"★ 'how to-V' = 'how + 주어 + should + V'. 동사의 목적어로 사용."}
+      ]
+    },
+    {
+      num:"④",
+      en:"With each tap, he could use his hearing to understand his surroundings better.",
+      slash:"With each tap, / he could use his hearing / to understand his surroundings better.",
+      slashKo:"두드릴 때마다, / 그는 청력을 이용할 수 있었다 / 주변 환경을 더 잘 이해하기 위해.",
+      grammar:[
+        {title:"to부정사 목적 용법", example:"use his hearing to understand", point:"★ '~하기 위해'. 조동사 could와 함께 과거 가능성 표현."}
+      ]
+    },
+    {
+      num:"⑤",
+      en:"Holman finally became confident in his mobility and was even able to navigate London's busy streets without assistance.",
+      slash:"Holman finally became confident / in his mobility / and was even able to navigate / London's busy streets / without assistance.",
+      slashKo:"홀먼은 마침내 자신감을 갖게 되었다 / 자신의 이동 능력에 / 그리고 심지어 다닐 수 있게 되었다 / 런던의 복잡한 거리를 / 도움 없이.",
+      grammar:[
+        {title:"be confident in (자신감)", example:"became confident in his mobility", point:"★ be confident in + 명사: '~에 자신감이 있다'."},
+        {title:"be able to (능력)", example:"was even able to navigate", point:"★ was able to = could. 과거 실제 성취 강조 시 was able to 선호."}
+      ]
+    },
+    {
+      num:"⑥",
+      en:"With his confidence growing, he decided to go on a great adventure by traveling through France and Italy.",
+      slash:"With his confidence growing, / he decided to go on a great adventure / by traveling through France and Italy.",
+      slashKo:"자신감이 커지면서, / 그는 위대한 모험을 떠나기로 결심했다 / 프랑스와 이탈리아를 여행함으로써.",
+      grammar:[
+        {title:"with + 명사 + 현재분사 (부대상황)", example:"With his confidence growing", point:"★ '자신감이 커지면서'. 진행 중인 상태를 나타내는 부대상황."},
+        {title:"by + 동명사 (수단)", example:"by traveling through France and Italy", point:"★ by + -ing: '~함으로써'. 수단이나 방법 표현."}
+      ]
+    },
+    {
+      num:"⑦",
+      en:"By the time Holman arrived in Naples in 1821, he had become an expert traveler.",
+      slash:"By the time Holman arrived in Naples in 1821, / he had become an expert traveler.",
+      slashKo:"1821년 홀먼이 나폴리에 도착했을 때쯤, / 그는 숙련된 여행자가 되어 있었다.",
+      grammar:[
+        {title:"By the time + 과거, 과거완료", example:"By the time he arrived, he had become", point:"★ 'by the time + 과거절'에서 더 먼저 완료된 사건은 과거완료. 수능 빈출 시제 구조."}
+      ]
+    },
+    {
+      num:"⑧",
+      en:"He even became the first blind man to ascend Mount Vesuvius.",
+      slash:"He even became / the first blind man / to ascend Mount Vesuvius.",
+      slashKo:"그는 심지어 되었다 / 최초의 시각 장애인이 / 베수비오 산을 오른.",
+      grammar:[
+        {title:"서수 + 명사 + to부정사 (형용사적)", example:"the first blind man to ascend", point:"★ 'the first/only/last + 명사 + to-V' 형태. to ascend = who ascended."}
+      ]
+    },
+    {
+      num:"⑨",
+      en:"At the time of his ascent, the mountain was in the middle of intense volcanic activity.",
+      slash:"At the time of his ascent, / the mountain was in the middle of / intense volcanic activity.",
+      slashKo:"그의 등반 당시, / 산은 한창이었다 / 강렬한 화산 활동의.",
+      grammar:[
+        {title:"at the time of + 명사", example:"At the time of his ascent", point:"★ '~할 때, ~당시'. at the time (that) he ascended와 동의."}
+      ]
+    },
+    {
+      num:"⑩",
+      en:"As Holman and his two companions approached the unstable edge of the volcano, the ground became almost too hot to walk on.",
+      slash:"As Holman and his two companions / approached the unstable edge of the volcano, / the ground became almost / too hot to walk on.",
+      slashKo:"홀먼과 두 동료가 / 화산의 불안정한 가장자리에 접근했을 때, / 땅은 거의 되었다 / 걷기에 너무 뜨거운.",
+      grammar:[
+        {title:"too ~ to-V 구문", example:"too hot to walk on", point:"★ 'too + 형용사 + to-V': '너무 ~해서 …할 수 없다'. walk on: 전치사 on 뒤 목적어 생략(=the ground)."}
+      ]
+    },
+    {
+      num:"⑪",
+      en:"His companions wanted to turn back, but Holman was unafraid.",
+      slash:"His companions wanted to turn back, / but Holman was unafraid.",
+      slashKo:"그의 동료들은 돌아가고 싶어 했지만, / 홀먼은 두려워하지 않았다.",
+      grammar:[
+        {title:"want to-V (소망)", example:"wanted to turn back", point:"★ want은 to부정사만 목적어로 취함. turn back: '되돌아가다'."}
+      ]
+    },
+    {
+      num:"⑫",
+      en:"He courageously proceeded until he reached the summit.",
+      slash:"He courageously proceeded / until he reached the summit.",
+      slashKo:"그는 용감하게 나아갔다 / 정상에 도달할 때까지.",
+      grammar:[
+        {title:"부사절 접속사 until", example:"proceeded until he reached the summit", point:"★ until: '~할 때까지'. till과 동의. '정상 도달'이 종결 조건."}
+      ]
+    }
+  ],
+
+  vocab:[
+    {word:"despair", meaning:"절망", pos:"n./v.", deriv:"despairing (adj.)"},
+    {word:"grief", meaning:"슬픔, 비탄", pos:"n.", deriv:"grieve (v.), grievous (adj.)"},
+    {word:"misfortune", meaning:"불행", pos:"n.", deriv:"fortunate (adj.), fortune (n.)"},
+    {word:"confront", meaning:"맞서다, 직면하다", pos:"v.", deriv:"confrontation (n.)"},
+    {word:"mobility", meaning:"이동 능력, 기동성", pos:"n.", deriv:"mobile (adj.)"},
+    {word:"navigate", meaning:"길을 찾아가다, 항해하다", pos:"v.", deriv:"navigation (n.), navigator (n.)"},
+    {word:"ascend", meaning:"오르다, 올라가다", pos:"v.", deriv:"ascent (n.), descent (n.)"},
+    {word:"volcanic", meaning:"화산의", pos:"adj.", deriv:"volcano (n.)"},
+    {word:"companion", meaning:"동반자, 동료", pos:"n.", deriv:"accompany (v.)"},
+    {word:"courageously", meaning:"용감하게", pos:"adv.", deriv:"courage (n.), courageous (adj.)"}
+  ],
+
+  translation:`이런 상황에 처한 대부분의 사람들은 절망과 슬픔의 나락으로 빠져들었을 것이다. 그러나 홀먼은 자신의 불행이 그를 주저앉히도록 내버려 두지 않고 자신의 상황에 정면으로 맞섰다. 그는 긍정적인 태도를 유지하려 노력하고, 주변을 찾아다니기 위해 철심 지팡이 사용법을 배우기 시작했다. 두드릴 때마다 청력을 이용해 주변 환경을 더 잘 이해할 수 있었다. 홀먼은 마침내 자신의 이동 능력에 자신감을 갖게 되었고, 심지어 도움 없이 런던의 복잡한 거리를 다닐 수 있게 되었다. 자신감이 커지면서 그는 프랑스와 이탈리아를 여행하며 위대한 모험을 떠나기로 결심했다.
+
+1821년 나폴리에 도착했을 때쯤 홀먼은 이미 숙련된 여행자가 되어 있었다. 그는 심지어 베수비오 산을 오른 최초의 시각 장애인이 되었다. 등반 당시 산은 강렬한 화산 활동의 한창이었다. 홀먼과 두 동료가 화산의 불안정한 가장자리에 접근하자 땅은 걷기에 너무 뜨거울 지경이 되었다. 동료들은 돌아가고 싶어 했지만 홀먼은 두려워하지 않았다. 그는 용감하게 정상에 도달할 때까지 나아갔다.`,
+
+  topic:{
+    subject:"역경에 맞선 홀먼의 도전과 베수비오 산 등반 성공",
+    mainIdea:"홀먼은 실명이라는 불행에 굴하지 않고 지팡이 사용법을 익히며 자립을 이루었고, 나아가 유럽을 여행하며 베수비오 산을 오른 최초의 시각 장애인이 되었다.",
+    structure:[
+      {step:"도입", text:"절망하지 않고 상황에 맞서는 홀먼의 긍정적 태도"},
+      {step:"전개1", text:"철심 지팡이로 자립, 런던 거리 독자 이동 → 유럽 여행 결심"},
+      {step:"전개2", text:"1821년 나폴리 도착, 베수비오 산 등반 도전"},
+      {step:"결론", text:"화산 활동 중에도 굴하지 않고 정상 도달 성공"}
+    ]
+  },
+
+  quiz:[
+    {
+      type:"mc", qnum:"1", qtype:"주제 추론",
+      question:"다음 글의 주제로 가장 적절한 것은?",
+      options:["이탈리아 나폴리 여행의 볼거리","베수비오 산 화산 활동의 위험성","역경에 굴하지 않는 홀먼의 도전과 용기","시각 장애인을 위한 보행 보조 기구","19세기 유럽 탐험의 역사"],
+      answer:2,
+      explanation:"홀먼이 실명 이후 긍정적 태도로 자립하고 베수비오 산을 정복한 도전 정신이 핵심. ③이 정답."
+    },
+    {
+      type:"mc", qnum:"2", qtype:"빈칸 추론",
+      question:"빈칸에 들어갈 말로 가장 적절한 것은?\n\nBy the time Holman arrived in Naples in 1821, he ________ an expert traveler.",
+      options:["became","has become","had become","was becoming","would become"],
+      answer:2,
+      explanation:"by the time + 과거절 → 주절은 과거완료. had become이 정답."
+    },
+    {
+      type:"mc", qnum:"3", qtype:"어법 오류",
+      question:"밑줄 친 ①~⑤ 중 어법상 틀린 것은?\n\nHolman did not let his misfortune ①keep him down. He started ②learning how ③to use a stick. With his confidence ④grown, he decided ⑤to go on a great adventure.",
+      options:["①","②","③","④","⑤"],
+      answer:3,
+      explanation:"④ grown → growing. 'with + 명사 + 현재분사'로 진행 중인 상태를 나타내야 함."
+    },
+    {
+      type:"mc", qnum:"4", qtype:"내용 불일치",
+      question:"본문의 내용과 일치하지 않는 것은?",
+      options:["홀먼은 철심 지팡이를 사용해 이동했다.","홀먼은 도움 없이 런던 거리를 다닐 수 있게 되었다.","홀먼은 베수비오 산을 오른 최초의 시각 장애인이다.","홀먼의 동료들도 끝까지 함께 정상에 올랐다.","베수비오 산 등반 당시 화산 활동이 있었다."],
+      answer:3,
+      explanation:"본문에서 동료들은 돌아가고 싶어 했지만 홀먼만 계속 나아갔다. ④가 불일치."
+    },
+    {
+      type:"mc", qnum:"5", qtype:"글의 순서",
+      question:"주어진 문장 다음에 이어질 글의 순서로 가장 적절한 것은?\n\n「Most people in this situation would sink into the depths of despair and grief.」\n\n(A) By the time Holman arrived in Naples in 1821, he had become an expert traveler.\n(B) However, Holman did not let his misfortune keep him down and confronted his situation.\n(C) He courageously proceeded until he reached the summit of Mount Vesuvius.",
+      options:["(A)-(B)-(C)","(B)-(A)-(C)","(C)-(A)-(B)","(A)-(C)-(B)","(B)-(C)-(A)"],
+      answer:1,
+      explanation:"절망 않고 맞섬(B) → 숙련된 여행자로 나폴리 도착(A) → 베수비오 정복(C) 순서가 자연스러움."
+    }
+  ],
+
+  essay:[
+    {
+      label:"서술형 1",
+      question:"다음 빈칸 (A), (B)에 본문에서 알맞은 말을 찾아 쓰시오.\n\nWith each (A)________, he could use his (B)________ to understand his surroundings better.",
+      condition:"조건: 본문에서 그대로 찾아 쓸 것 / 각 1단어",
+      answer:"(A) tap  (B) hearing"
+    },
+    {
+      label:"서술형 2",
+      question:"홀먼이 역경을 극복할 수 있었던 방법을 두 가지 본문에서 찾아 우리말로 서술하시오.",
+      condition:"조건: 완전한 문장으로 50자 내외",
+      answer:"철심 지팡이로 주변을 두드려 청력으로 환경을 파악하고, 긍정적 태도를 유지하며 자립 능력을 키웠다."
+    }
+  ]
+},
+
+// ──────────────────────────────────────────
+// 6: 2-3 Legacy
+// ──────────────────────────────────────────
+{
+  tag:"본문 2-3",
+  title:"James Holman – A Legacy of Inspiration",
+  fullText:`After making his way through Europe, Holman continued to travel the world. He journeyed to Russia, India, China, Australia, and different parts of Africa and South America. He would explore strange new cities by tapping his walking stick and paying close attention to all the sounds and smells around him. When people asked Holman how a sightless man could enjoy such journeys, he said that his blindness actually made traveling more thrilling. It drove his curiosity and forced him to examine everything more deeply than a normal traveler would. During his life, Holman visited five continents and came into contact with no fewer than 200 separate cultures.
+Holman died in 1857 in London, a week after finishing his autobiography, Holman's Narratives of His Travels. Now, long after his death, his triumph over adversity is an inspiration to all of us. He didn't let his disability stop him from taking on challenges and enjoying his life. His love for traveling to places where he had never been before helped him overcome whatever difficulties his blindness put in his way. He reminds us not to be constrained by our limitations; rather, we should be empowered by them.`,
+
+  sentences:[
+    {
+      num:"①",
+      en:"After making his way through Europe, Holman continued to travel the world.",
+      slash:"After making his way through Europe, / Holman continued to travel the world.",
+      slashKo:"유럽을 헤쳐 나간 후, / 홀먼은 세계 여행을 계속했다.",
+      grammar:[
+        {title:"전치사 after + 동명사", example:"After making his way through Europe", point:"★ after + -ing: '~한 후'. make one's way through: '~을 헤쳐 나아가다'."}
+      ]
+    },
+    {
+      num:"②",
+      en:"He journeyed to Russia, India, China, Australia, and different parts of Africa and South America.",
+      slash:"He journeyed to Russia, India, China, Australia, / and different parts of Africa and South America.",
+      slashKo:"그는 러시아, 인도, 중국, 호주, / 그리고 아프리카와 남아메리카의 다양한 지역으로 여행했다.",
+      grammar:[
+        {title:"병렬 나열 (and)", example:"Russia, India, China, Australia, and ...", point:"★ 여러 명사를 쉼표+and로 나열. 마지막 명사 앞에 and."}
+      ]
+    },
+    {
+      num:"③",
+      en:"He would explore strange new cities by tapping his walking stick and paying close attention to all the sounds and smells around him.",
+      slash:"He would explore strange new cities / by tapping his walking stick / and paying close attention / to all the sounds and smells around him.",
+      slashKo:"그는 낯선 새 도시들을 탐험하곤 했다 / 지팡이를 두드리며 / 그리고 세심한 주의를 기울이며 / 주변의 모든 소리와 냄새에.",
+      grammar:[
+        {title:"would (과거 습관)", example:"He would explore strange new cities", point:"★ would + 동사원형: 과거의 반복/습관. used to와 유사하나 상태 동사 불가."},
+        {title:"by + 동명사 병렬 (수단)", example:"by tapping ... and paying", point:"★ by 뒤에 두 동명사가 and로 병렬. pay attention to: '~에 주의를 기울이다'."}
+      ]
+    },
+    {
+      num:"④",
+      en:"When people asked Holman how a sightless man could enjoy such journeys, he said that his blindness actually made traveling more thrilling.",
+      slash:"When people asked Holman / how a sightless man could enjoy such journeys, / he said that his blindness / actually made traveling more thrilling.",
+      slashKo:"사람들이 홀먼에게 물었을 때 / 앞 못 보는 사람이 어떻게 그런 여행을 즐길 수 있느냐고, / 그는 말했다 자신의 시각 장애가 / 실제로 여행을 더 짜릿하게 만들었다고.",
+      grammar:[
+        {title:"간접 의문문 (how + 주어 + 동사)", example:"how a sightless man could enjoy", point:"★ 간접 의문문은 의문사+주어+동사 어순."},
+        {title:"make + 목적어 + 형용사 (5형식)", example:"made traveling more thrilling", point:"★ traveling = 동명사 목적어. more thrilling = 비교급 형용사 보어."}
+      ]
+    },
+    {
+      num:"⑤",
+      en:"It drove his curiosity and forced him to examine everything more deeply than a normal traveler would.",
+      slash:"It drove his curiosity / and forced him to examine everything / more deeply / than a normal traveler would.",
+      slashKo:"그것은 그의 호기심을 자극하고 / 그가 모든 것을 더 깊이 살펴보도록 강요했다 / / 일반 여행자가 할 것보다.",
+      grammar:[
+        {title:"force + 목적어 + to-V (5형식 강제)", example:"forced him to examine everything", point:"★ force + O + to-V: '~에게 …하도록 강요하다'. compel/make와 비교."},
+        {title:"than + 조동사 (비교절 생략)", example:"than a normal traveler would (examine)", point:"★ 비교절에서 반복 동사 생략. would 뒤 examine everything more deeply 생략."}
+      ]
+    },
+    {
+      num:"⑥",
+      en:"During his life, Holman visited five continents and came into contact with no fewer than 200 separate cultures.",
+      slash:"During his life, / Holman visited five continents / and came into contact / with no fewer than 200 separate cultures.",
+      slashKo:"살아가는 동안, / 홀먼은 다섯 대륙을 방문했고 / 접촉하게 되었다 / 200개 이상의 별개 문화와.",
+      grammar:[
+        {title:"no fewer than (수량 강조)", example:"no fewer than 200 cultures", point:"★ 'no fewer than + 수' = 'at least + 수': '적어도 ~만큼'. 수량 최소 기준 강조."},
+        {title:"come into contact with", example:"came into contact with 200 cultures", point:"★ '~와 접촉하다' 관용 표현. come into + 명사 형태 숙어."}
+      ]
+    },
+    {
+      num:"⑦",
+      en:"Holman died in 1857 in London, a week after finishing his autobiography, Holman's Narratives of His Travels.",
+      slash:"Holman died in 1857 in London, / a week after finishing his autobiography, / Holman's Narratives of His Travels.",
+      slashKo:"홀먼은 1857년 런던에서 사망했다, / 자서전을 완성하고 일주일 후, / '홀먼의 여행 서술'인.",
+      grammar:[
+        {title:"전치사구 a week after -ing", example:"a week after finishing his autobiography", point:"★ a week after: '~하고 나서 일주일 후'. 시간 간격 표현."}
+      ]
+    },
+    {
+      num:"⑧",
+      en:"Now, long after his death, his triumph over adversity is an inspiration to all of us.",
+      slash:"Now, long after his death, / his triumph over adversity / is an inspiration to all of us.",
+      slashKo:"이제, 그의 죽음 이후 오랜 시간이 흐른 후에도, / 역경에 대한 그의 승리는 / 우리 모두에게 영감을 주고 있다.",
+      grammar:[
+        {title:"전치사 over (극복)", example:"triumph over adversity", point:"★ triumph over: '~에 대한 승리, ~을 극복'. over의 의미 확장."}
+      ]
+    },
+    {
+      num:"⑨",
+      en:"He didn't let his disability stop him from taking on challenges and enjoying his life.",
+      slash:"He didn't let his disability / stop him from taking on challenges / and enjoying his life.",
+      slashKo:"그는 자신의 장애가 / 도전에 맞서고 삶을 즐기는 것에서 그를 막도록 / 내버려 두지 않았다.",
+      grammar:[
+        {title:"let + 목적어 + 동사원형 (사역)", example:"didn't let his disability stop him", point:"★ stop + 목적어 + from -ing: '~가 …하는 것을 막다'. let ... stop him from -ing 결합."}
+      ]
+    },
+    {
+      num:"⑩",
+      en:"His love for traveling to places where he had never been before helped him overcome whatever difficulties his blindness put in his way.",
+      slash:"His love for traveling to places / where he had never been before / helped him overcome / whatever difficulties his blindness put in his way.",
+      slashKo:"가 본 적 없는 장소로 여행하는 것에 대한 그의 사랑이 / 한 번도 가 본 적 없는 / 극복하도록 도왔다 / 시각 장애가 그의 앞에 놓은 어떠한 어려움이든.",
+      grammar:[
+        {title:"복합관계대명사 whatever", example:"whatever difficulties his blindness put in his way", point:"★ whatever + 명사: '어떠한 ~이든'. 명사절/부사절 이끔. 수능 빈출."},
+        {title:"help + 목적어 + 동사원형", example:"helped him overcome difficulties", point:"★ help + O + (to-)V: 목적격보어에 원형 또는 to부정사."}
+      ]
+    },
+    {
+      num:"⑪",
+      en:"He reminds us not to be constrained by our limitations; rather, we should be empowered by them.",
+      slash:"He reminds us / not to be constrained by our limitations; / rather, / we should be empowered by them.",
+      slashKo:"그는 우리에게 상기시켜 준다 / 우리의 한계에 얽매이지 말라고; / 오히려, / 우리는 그것들에 의해 힘을 얻어야 한다고.",
+      grammar:[
+        {title:"remind + 목적어 + not to-V", example:"reminds us not to be constrained", point:"★ remind + O + (not) to-V: '~에게 …하라고/하지 말라고 상기시키다'."},
+        {title:"be constrained vs. be empowered (수동태 대조)", example:"not to be constrained ... be empowered", point:"★ constrain(제약하다)↔empower(힘을 주다) 대조. 양쪽 모두 수동태. 세미콜론(;)으로 대조 연결."}
+      ]
+    }
+  ],
+
+  vocab:[
+    {word:"sightless", meaning:"눈 먼, 시각 장애의", pos:"adj.", deriv:"sight (n.)"},
+    {word:"thrilling", meaning:"짜릿한, 흥미진진한", pos:"adj.", deriv:"thrill (n./v.), thrilled (adj.)"},
+    {word:"curiosity", meaning:"호기심", pos:"n.", deriv:"curious (adj.), curiously (adv.)"},
+    {word:"continent", meaning:"대륙", pos:"n.", deriv:"continental (adj.)"},
+    {word:"autobiography", meaning:"자서전", pos:"n.", deriv:"biography (n.), autobiographical (adj.)"},
+    {word:"triumph", meaning:"승리; 승리하다", pos:"n./v.", deriv:"triumphant (adj.)"},
+    {word:"adversity", meaning:"역경, 불행", pos:"n.", deriv:"adverse (adj.)"},
+    {word:"disability", meaning:"장애", pos:"n.", deriv:"disable (v.), disabled (adj.)"},
+    {word:"constrain", meaning:"제약하다, 얽매다", pos:"v.", deriv:"constraint (n.)"},
+    {word:"empower", meaning:"힘을 주다, 권한을 부여하다", pos:"v.", deriv:"empowerment (n.)"}
+  ],
+
+  translation:`유럽을 헤쳐 나간 후, 홀먼은 계속해서 세계를 여행했다. 그는 러시아, 인도, 중국, 호주, 그리고 아프리카와 남아메리카의 다양한 지역으로 여행했다. 그는 지팡이를 두드리고 주변의 모든 소리와 냄새에 세심한 주의를 기울이며 낯선 새 도시들을 탐험하곤 했다. 사람들이 앞 못 보는 사람이 어떻게 그런 여행을 즐길 수 있느냐고 물으면, 그는 시각 장애가 오히려 여행을 더 짜릿하게 만들었다고 답했다. 그것이 그의 호기심을 자극하고 일반 여행자보다 더 깊이 모든 것을 살펴보도록 이끌었다. 살아가는 동안 홀먼은 다섯 대륙을 방문하고 200개 이상의 별개 문화와 접촉했다.
+
+홀먼은 자서전 '홀먼의 여행 서술'을 완성하고 일주일 후인 1857년 런던에서 사망했다. 이제, 그의 죽음으로부터 오랜 시간이 흐른 후에도, 역경에 대한 그의 승리는 우리 모두에게 영감을 주고 있다. 그는 자신의 장애가 도전에 맞서고 삶을 즐기는 것을 막도록 내버려 두지 않았다. 가 본 적 없는 장소로 여행하는 것에 대한 그의 사랑은 시각 장애가 그의 앞에 놓은 어떠한 어려움이든 극복하도록 도왔다. 그는 우리에게 한계에 얽매이지 말고 오히려 그것에서 힘을 얻으라고 상기시켜 준다.`,
+
+  topic:{
+    subject:"홀먼의 세계 여행과 역경 극복이 주는 삶의 교훈",
+    mainIdea:"홀먼은 다섯 대륙, 200개 이상의 문화와 접촉하며 세계를 누볐고, 시각 장애가 오히려 여행을 더 깊이 탐구하게 했다고 말했다. 그의 삶은 한계에 얽매이지 말고 그것에서 힘을 얻으라는 교훈을 준다.",
+    structure:[
+      {step:"도입", text:"유럽 이후 세계 각지 여행, 지팡이와 청각으로 탐험"},
+      {step:"전개1", text:"시각 장애가 오히려 여행을 더 짜릿하게 만들었다는 홀먼의 답변"},
+      {step:"전개2", text:"홀먼의 업적: 5대륙, 200개 문화 접촉 후 사망"},
+      {step:"결론", text:"역경 극복의 영감, 한계를 힘으로 전환하라는 교훈"}
+    ]
+  },
+
+  quiz:[
+    {
+      type:"mc", qnum:"1", qtype:"주제 추론",
+      question:"다음 글의 주제로 가장 적절한 것은?",
+      options:["19세기 탐험가들의 자서전 출판","아프리카와 남아메리카의 문화적 다양성","홀먼의 세계 여행과 역경 극복이 주는 교훈","시각 장애인의 이동 보조 기구 발전","홀먼의 자서전 집필 과정"],
+      answer:2,
+      explanation:"홀먼의 전 세계 여행과 그가 남긴 '한계를 힘으로' 삼으라는 메시지가 핵심. ③이 정답."
+    },
+    {
+      type:"mc", qnum:"2", qtype:"빈칸 추론",
+      question:"빈칸에 들어갈 말로 가장 적절한 것은?\n\nHe reminds us not to be ________ by our limitations; rather, we should be empowered by them.",
+      options:["inspired","motivated","constrained","encouraged","guided"],
+      answer:2,
+      explanation:"본문의 'not to be constrained by our limitations'에서 constrained가 정답. 제약/얽매임의 의미."
+    },
+    {
+      type:"mc", qnum:"3", qtype:"어법 오류",
+      question:"밑줄 친 ①~⑤ 중 어법상 틀린 것은?\n\nHis blindness actually made ①traveling more thrilling. It ②forced him to examine everything more deeply ③than a normal traveler would. He came into contact with ④no fewer than 200 cultures. He didn't let his disability ⑤to stop him from taking on challenges.",
+      options:["①","②","③","④","⑤"],
+      answer:4,
+      explanation:"⑤ to stop → stop. let은 사역동사로 목적격보어에 동사원형이 와야 함. let + O + V원형."
+    },
+    {
+      type:"mc", qnum:"4", qtype:"내용 불일치",
+      question:"본문의 내용과 일치하지 않는 것은?",
+      options:["홀먼은 지팡이를 두드려 소리와 냄새로 도시를 탐험했다.","홀먼은 시각 장애가 여행을 더 짜릿하게 만들었다고 말했다.","홀먼은 생애 동안 5대륙을 방문했다.","홀먼은 자서전을 완성하고 1년 후에 사망했다.","홀먼의 삶은 한계를 힘으로 삼으라는 교훈을 준다."],
+      answer:3,
+      explanation:"본문에서 홀먼은 자서전 완성 '일주일 후(a week after)'에 사망했다. 1년이 아님. ④가 불일치."
+    },
+    {
+      type:"mc", qnum:"5", qtype:"글의 순서",
+      question:"주어진 문장 다음에 이어질 글의 순서로 가장 적절한 것은?\n\n「After making his way through Europe, Holman continued to travel the world.」\n\n(A) Holman died in 1857, a week after finishing his autobiography.\n(B) He would explore strange new cities by tapping his walking stick.\n(C) During his life, Holman visited five continents and came into contact with no fewer than 200 cultures.",
+      options:["(A)-(B)-(C)","(B)-(C)-(A)","(C)-(A)-(B)","(B)-(A)-(C)","(C)-(B)-(A)"],
+      answer:1,
+      explanation:"탐험 방식(B) → 방문 규모(C) → 사망과 유산(A) 순서가 자연스럽게 이어짐."
+    }
+  ],
+
+  essay:[
+    {
+      label:"서술형 1",
+      question:"다음 빈칸 (A), (B)에 본문에서 알맞은 말을 찾아 쓰시오.\n\nHe reminds us not to be (A)________ by our limitations; rather, we should be (B)________ by them.",
+      condition:"조건: 본문에서 그대로 찾아 쓸 것 / 각 1단어",
+      answer:"(A) constrained  (B) empowered"
+    },
+    {
+      label:"서술형 2",
+      question:"홀먼이 시각 장애를 오히려 긍정적으로 여긴 이유를 본문에서 근거를 들어 우리말로 서술하시오.",
+      condition:"조건: 두 가지 이유를 포함하여 50자 내외",
+      answer:"시각 장애가 그의 호기심을 자극하고, 일반 여행자보다 모든 것을 더 깊이 탐구하게 만들어 여행을 더 짜릿하게 했기 때문이다."
+    }
+  ]
+}
+
+]; // end passages
+
+// ═══════════════════════════════════════════
+// 상태 & 함수
+// ═══════════════════════════════════════════
+let currentPassage = 0;
+let currentTab = 0;
+const tabNames = ["전문","문장분석","핵심단어","전문해석","주제와 요지","변형문제"];
+
+function startApp(){
+  document.getElementById('cover').style.display='none';
+  document.getElementById('app').style.display='block';
+  renderPassage(0);
+}
+
+function showPassage(idx){
+  currentPassage = idx;
+  currentTab = 0;
+  document.querySelectorAll('.sidebar-item').forEach((el,i)=>{
+    el.classList.toggle('active', i===idx);
+  });
+  renderPassage(idx);
+}
+
+function renderPassage(idx){
+  const p = passages[idx];
+  const mc = document.getElementById('mainContent');
+  mc.innerHTML = '';
+
+  // Header
+  const hdr = document.createElement('div');
+  hdr.className = 'passage-header';
+  hdr.innerHTML = `<div class="passage-tag">${p.tag}</div><div class="passage-title">${p.title}</div>`;
+  mc.appendChild(hdr);
+
+  // Tabs
+  const tabBar = document.createElement('div');
+  tabBar.className = 'tabs';
+  tabNames.forEach((name,i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (i===0?' active':'');
+    btn.textContent = name;
+    btn.setAttribute('onclick',`switchTab(${i})`);
+    btn.id = `tabBtn${i}`;
+    tabBar.appendChild(btn);
+  });
+  mc.appendChild(tabBar);
+
+  // Tab contents
+  const contents = document.createElement('div');
+  contents.id = 'tabContents';
+
+  // Tab 0: 전문
+  contents.appendChild(buildFullText(p));
+  // Tab 1: 문장분석
+  contents.appendChild(buildSentences(p));
+  // Tab 2: 핵심단어
+  contents.appendChild(buildVocab(p));
+  // Tab 3: 전문해석
+  contents.appendChild(buildTranslation(p));
+  // Tab 4: 주제와 요지
+  contents.appendChild(buildTopic(p));
+  // Tab 5: 변형문제
+  contents.appendChild(buildQuiz(p, idx));
+
+  mc.appendChild(contents);
+
+  // show first tab
+  document.querySelectorAll('.tab-content')[0].classList.add('active');
+}
+
+function switchTab(i){
+  currentTab = i;
+  document.querySelectorAll('.tab-btn').forEach((btn,idx)=>{
+    btn.classList.toggle('active', idx===i);
+  });
+  document.querySelectorAll('.tab-content').forEach((el,idx)=>{
+    el.classList.toggle('active', idx===i);
+  });
+}
+
+// ── Tab builders ──
+
+function buildFullText(p){
+  const div = document.createElement('div');
+  div.className = 'tab-content';
+  div.innerHTML = `<div class="section-title"><span class="num">全</span>전문</div>
+  <div class="full-text-box">${p.fullText.replace(/\n\n/g,'</p><p>').replace(/^/,'<p>').replace(/$/,'</p>')}</div>`;
+  return div;
+}
+
+function buildSentences(p){
+  const div = document.createElement('div');
+  div.className = 'tab-content';
+  let html = `<div class="section-title"><span class="num">2</span>문장분석</div>`;
+  p.sentences.forEach(s=>{
+    html += `<div class="sentence-block">
+      <div class="sent-english"><span class="sent-num">${s.num}</span><span class="sent-english-text">${s.en}</span></div>
+      <div class="slash-reading">
+        <div class="slash-en">${s.slash}</div>
+        <div class="slash-ko">${s.slashKo}</div>
+      </div>`;
+    s.grammar.forEach(g=>{
+      html += `<div class="grammar-item">
+        <span class="g-title">◆ ${g.title}</span><br>
+        <span class="g-example">▶ ${g.example}</span><br>
+        <span class="g-point">${g.point}</span>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  div.innerHTML = html;
+  return div;
+}
+
+function buildVocab(p){
+  const div = document.createElement('div');
+  div.className = 'tab-content';
+  let html = `<div class="section-title"><span class="num">3</span>핵심단어 및 표현</div>`;
+  p.vocab.forEach(v=>{
+    html += `<div class="vocab-item">
+      <span class="vocab-word">${v.word}</span>
+      <span class="vocab-meaning">${v.meaning}</span>
+      <span class="vocab-pos">${v.pos}</span>
+      <span class="vocab-deriv">${v.deriv}</span>
+    </div>`;
+  });
+  div.innerHTML = html;
+  return div;
+}
+
+function buildTranslation(p){
+  const div = document.createElement('div');
+  div.className = 'tab-content';
+  const paras = p.translation.split('\n\n').map(t=>`<p>${t}</p>`).join('');
+  div.innerHTML = `<div class="section-title"><span class="num">4</span>전문해석</div>
+  <div class="translation-box">${paras}</div>`;
+  return div;
+}
+
+function buildTopic(p){
+  const div = document.createElement('div');
+  div.className = 'tab-content';
+  let structureHtml = p.topic.structure.map(s=>`
+    <div class="structure-step">
+      <span class="step-badge">${s.step}</span>
+      <span class="step-text">${s.text}</span>
+    </div>`).join('');
+  div.innerHTML = `<div class="section-title"><span class="num">5</span>주제와 요지</div>
+  <div class="topic-card">
+    <div class="topic-label">주 제</div>
+    <div class="topic-content">${p.topic.subject}</div>
+  </div>
+  <div class="topic-card">
+    <div class="topic-label">요 지</div>
+    <div class="topic-content">${p.topic.mainIdea}</div>
+  </div>
+  <div class="topic-card">
+    <div class="topic-label">구조 흐름</div>
+    ${structureHtml}
+  </div>`;
+  return div;
+}
+
+function buildQuiz(p, pIdx){
+  const div = document.createElement('div');
+  div.className = 'tab-content';
+  let html = `<div class="section-title"><span class="num">6</span>변형문제</div>`;
+
+  // MC questions
+  p.quiz.forEach((q, qIdx)=>{
+    const uid = `p${pIdx}q${qIdx}`;
+    html += `<div class="quiz-block" id="block_${uid}">
+      <span class="quiz-num">${q.qnum}번 [${q.qtype}]</span>
+      <div class="quiz-question">${q.question.replace(/\n/g,'<br>')}</div>
+      <div class="quiz-options" id="opts_${uid}">`;
+    q.options.forEach((opt, oIdx)=>{
+      const numStr = ['①','②','③','④','⑤'][oIdx];
+      html += `<button class="quiz-option" id="opt_${uid}_${oIdx}" onclick="selectOpt('${uid}',${oIdx},${q.answer},${pIdx},${qIdx})">
+        <span class="opt-icon">${numStr}</span> ${opt}
+      </button>`;
+    });
+    html += `</div>
+      <div class="quiz-explanation" id="exp_${uid}">${q.explanation}</div>
+      <button class="reset-btn" onclick="resetQuiz('${uid}',${q.options.length})">↺ 다시 풀기</button>
+    </div>`;
+  });
+
+  // 서술형
+  html += `<hr class="passage-divider"><div class="section-title" style="margin-top:8px"><span class="num">서</span>서술형</div>`;
+  p.essay.forEach((e, eIdx)=>{
+    const uid = `e${pIdx}_${eIdx}`;
+    html += `<div class="essay-block">
+      <span class="essay-label">${e.label}</span>
+      <div class="essay-question">${e.question.replace(/\n/g,'<br>')}</div>
+      <div class="essay-condition">${e.condition}</div>
+      <textarea class="essay-textarea" id="ta_${uid}" placeholder="여기에 답안을 작성하세요..."></textarea>
+      <br>
+      <button class="answer-toggle" onclick="toggleAnswer('ans_${uid}')">모범답안 확인</button>
+      <div class="essay-answer" id="ans_${uid}">📝 ${e.answer}</div>
+    </div>`;
+  });
+
+  div.innerHTML = html;
+  return div;
+}
+
+// ── 인터랙션 함수 ──
+function selectOpt(uid, chosen, correct, pIdx, qIdx){
+  const optsEl = document.getElementById('opts_'+uid);
+  if(optsEl.dataset.answered) return;
+  optsEl.dataset.answered = '1';
+
+  const btns = optsEl.querySelectorAll('.quiz-option');
+  btns.forEach((btn, i)=>{
+    btn.style.cursor = 'default';
+    if(i === correct){
+      btn.classList.add('correct');
+      btn.querySelector('.opt-icon').textContent = '✓';
+    } else if(i === chosen && chosen !== correct){
+      btn.classList.add('wrong');
+      btn.querySelector('.opt-icon').textContent = '✗';
+    }
+  });
+
+  document.getElementById('exp_'+uid).classList.add('show');
+}
+
+function resetQuiz(uid, numOpts){
+  const optsEl = document.getElementById('opts_'+uid);
+  delete optsEl.dataset.answered;
+  const btns = optsEl.querySelectorAll('.quiz-option');
+  const icons = ['①','②','③','④','⑤'];
+  btns.forEach((btn,i)=>{
+    btn.className = 'quiz-option';
+    btn.style.cursor = 'pointer';
+    btn.querySelector('.opt-icon').textContent = icons[i];
+  });
+  document.getElementById('exp_'+uid).classList.remove('show');
+}
+
+function toggleAnswer(id){
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+}
+</script>
+</body>
+</html>
